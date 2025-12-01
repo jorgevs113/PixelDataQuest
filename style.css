@@ -1,0 +1,133 @@
+/* Importa la fuente pixelada */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* Variables para colores neón */
+:root {
+    --neon-blue: #00FFFF;
+    --neon-magenta: #FF00FF;
+    --neon-green: #00FF00;
+    --dark-bg: #1a1a2e;
+    --light-gray-text: #E0E0E0;
+    --font-pixel: 'Press Start 2P', cursive;
+}
+
+/* Base y Fondo */
+body {
+    font-family: var(--font-pixel);
+    color: var(--neon-green);
+    background-color: var(--dark-bg);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: radial-gradient(#303030 5%, transparent 5%), radial-gradient(#303030 5%, transparent 5%);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+    
+}
+
+/* Contenedor Principal (Simula la pantalla) */
+.container {
+    display: grid;
+    grid-template-areas: "header header" "main sidebar";
+    grid-template-columns: 3fr 1fr;
+    gap: 30px;
+    background-color: rgba(0, 0, 0, 0.9);
+    border: 3px solid var(--neon-blue);
+    box-shadow: 0 0 20px var(--neon-blue), inset 0 0 10px var(--neon-blue);
+    padding: 30px;
+    max-width: 1000px;
+    width: 90%;
+}
+
+h1 { font-size: 1.5rem; color: var(--neon-magenta); text-shadow: 0 0 5px var(--neon-magenta); }
+h2, h3 { font-size: 1rem; color: var(--neon-blue); margin-top: 15px; }
+p, ul { font-size: 0.8rem; font-family: monospace; /* Fuente de terminal */ }
+
+/* Barra de Progreso (Común) */
+.bar-bg {
+    height: 12px;
+    background-color: #333;
+    border: 1px solid var(--neon-green);
+    margin: 5px 0;
+}
+.bar-fill {
+    height: 100%;
+    background-color: var(--neon-green);
+    transition: width 0.5s ease-out; /* Animación de llenado */
+}
+.module-progress-bar, .yearly-progress-display { margin-bottom: 20px; }
+
+/* Lista de Tareas */
+.tasks-list ul {
+    list-style: none;
+    padding: 0;
+}
+.tasks-list li {
+    margin-bottom: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: var(--light-gray-text);
+}
+.tasks-list li.completed {
+    text-decoration: line-through;
+    color: var(--medium-gray-text);
+}
+
+/* Checkbox retro simple */
+.task-checkbox {
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+    border: 1px solid var(--neon-green);
+    background-color: transparent;
+    cursor: pointer;
+    display: inline-block;
+}
+.tasks-list li.completed .task-checkbox {
+    background-color: var(--neon-green);
+    box-shadow: 0 0 5px var(--neon-green);
+}
+
+/* Contador Circular */
+.countdown-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 20px auto;
+}
+#circular-countdown {
+    transform: rotate(-90deg); /* Para que inicie desde arriba */
+}
+.base-circle {
+    fill: none;
+    stroke: rgba(0, 255, 255, 0.2); /* Cian transparente */
+    stroke-width: 5;
+}
+.progress-circle {
+    fill: none;
+    stroke: var(--neon-magenta); /* Magenta neón */
+    stroke-width: 5;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s ease-out;
+}
+.time-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: var(--neon-blue);
+}
+#days-left { font-size: 2rem; }
+#hms-left { font-size: 1.2rem; }
+
+/* Estilos de las Fases en el Sidebar */
+#phases-list li {
+    font-family: monospace;
+    margin-bottom: 5px;
+    color: var(--light-gray-text);
+}

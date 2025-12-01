@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Data Quest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+</head>
+<body>
+    <div class="container">
+        
+        <header class="game-header">
+            <h1>PIXEL DATA QUEST</h1>
+            <p class="objective-text">OBJECTIVE: BECOME DATA ANALYST FUNCTIONAL AND RENTABLE FOR DEC 2026</p>
+        </header>
+
+        <main class="main-screen">
+            <div class="current-module-display">
+                <p class="phase-title" id="current-phase-title"></p>
+                <h2 class="module-title" id="current-module-title"></h2>
+                <p class="module-objective" id="current-module-objective"></p>
+                
+                <div class="countdown-container">
+                    <svg id="circular-countdown" viewBox="0 0 100 100">
+                        <circle class="base-circle" cx="50" cy="50" r="45"></circle>
+                        <circle class="progress-circle" cx="50" cy="50" r="45"></circle>
+                    </svg>
+                    <div class="time-display">
+                        <span class="days-left" id="days-left">-- DAYS</span><br>
+                        <span class="hours-minutes-seconds-left" id="hms-left">--:--:--</span>
+                    </div>
+                </div>
+
+                <div class="module-progress-bar">
+                    <span class="progress-label">MONTHLY PROGRESS:</span>
+                    <div class="bar-bg">
+                        <div class="bar-fill" id="monthly-bar-fill"></div>
+                    </div>
+                    <span class="progress-percentage" id="monthly-percentage">0%</span>
+                </div>
+
+                <div class="tasks-list">
+                    <h3>MICROTASKS / CHECKLIST:</h3>
+                    <ul id="current-tasks">
+                        </ul>
+                    <div class="expected-outcome">
+                        <h3>💡 RESULTADO:</h3>
+                        <p id="outcome-text"></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="sidebar">
+            <div class="yearly-progress-display">
+                <p class="progress-label">YEARLY PROGRESS:</p>
+                <div class="bar-bg">
+                    <div class="bar-fill" id="yearly-bar-fill"></div>
+                </div>
+                <span class="progress-percentage" id="yearly-percentage">0%</span>
+            </div>
+
+            <div class="phases-summary">
+                <h3>PHASES:</h3>
+                <ul id="phases-list">
+                    </ul>
+            </div>
+        </aside>
+    </div>
+
+    <script src="script.js"></script> 
+</body>
+</html>
