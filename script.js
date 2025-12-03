@@ -3,12 +3,15 @@
 // =======================================================
 
 const firebaseConfig = {
+  // CREDENCIALES COMPLETAS PARA TU PROYECTO PIXEL DATA QUEST
   apiKey: "AIzaSyAsc6sCTXDevRtwd-wa9uEksHng2syt9f0",
   authDomain: "pixeldataquest-jorge.firebaseapp.com",
   projectId: "pixeldataquest-jorge",
   storageBucket: "pixeldataquest-jorge.firebasestorage.app",
   messagingSenderId: "1017478767394",
-  appId: "1:1017478767394:web:b9ecb4c50484e596757b7b"
+  appId: "1:1017478767394:web:b9ecb4c50484e596757b7b",
+  // CLAVE CRUCIAL: URL de la Realtime Database
+  databaseURL: "https://pixeldataquest-jorge-default-rtdb.firebaseio.com" 
 };
 
 // Inicializa Firebase
@@ -31,12 +34,13 @@ const plan = {
     fases: [
         // FASE 1: Descubrimiento (Nov-Dic 2025)
         {
-            id: "fase1", nombre: "🟩 FASE 1 — Descubrimiento", color: "#00FF00",
+            id: "fase1", nombre: "🟩 FASE 1 — Descubrimiento", color: "#00FF00", 
+            objetivo_fase: "Conocer el rol del analista y establecer el entorno técnico inicial.",
             meses: [
                 { id: "nov2025", nombre: "Noviembre 2025 — “Mapa mental del analista”", objetivo: "Conocer el rol y crear entorno.", deadline: "2025-11-30T23:59:59", 
                     tareas: [
-                        { id: "nov25-t1", descripcion: "Leer 3 descripciones de puestos...", completada: false },
-                        { id: "nov25-t2", descripcion: "Ver la introducción del Certificado de Google...", completada: false },
+                        { id: "nov25-t1", descripcion: "Leer 3 descripciones de puestos para entender el rol...", completada: false },
+                        { id: "nov25-t2", descripcion: "Ver la introducción del Certificado de Google (o similar)...", completada: false },
                         { id: "nov25-t3", descripcion: "Crear carpetas y cuentas (GitHub/Kaggle).", completada: false },
                         { id: "nov25-t4", descripcion: "Instalar: Excel, Python, VS Code o Jupyter Notebook.", completada: false },
                         { id: "nov25-t5", descripcion: "Guardar tus primeros datasets curiosos.", completada: false },
@@ -56,7 +60,8 @@ const plan = {
         
         // FASE 2: Fundamentos Técnicos (Enero - Abril 2026)
         {
-            id: "fase2", nombre: "🟦 FASE 2 — Fundamentos técnicos", color: "#00FFFF",
+            id: "fase2", nombre: "🟦 FASE 2 — Fundamentos técnicos", color: "#00FFFF", 
+            objetivo_fase: "Dominar Excel y SQL para la extracción y manipulación eficiente de datos.",
             meses: [
                 { id: "ene2026", nombre: "Enero 2026 — “Excel en serio”", objetivo: "Dominio de Excel y Módulo 3 de Google Cert.", deadline: "2026-01-31T23:59:59", tareas: [{ id: "ene26-t1", descripcion: "Aprender funciones intermedias (SI, BUSCARX, etc.).", completada: false }, { id: "ene26-t2", descripcion: "Crear tablas dinámicas y formatos condicionales.", completada: false }, { id: "ene26-t3", descripcion: "Realizar un mini informe de ventas usando funciones.", completada: false }], resultado: "Usas Excel como herramienta de análisis." },
                 { id: "feb2026", nombre: "Febrero 2026 — “Excel avanzado y visualización”", objetivo: "Visualización, Git y Ética.", deadline: "2026-02-28T23:59:59", tareas: [{ id: "feb26-t1", descripcion: "Practicar gráficos y crear un dashboard sencillo en Excel.", completada: false }, { id: "feb26-t2", descripcion: "Aprender comandos básicos de Git (commit, push, pull).", completada: false }, { id: "feb26-t3", descripcion: "Leer sobre la ética y sesgos en la presentación de datos.", completada: false }], resultado: "Puedes mostrar resultados visuales profesionales." },
@@ -68,6 +73,7 @@ const plan = {
         // FASE 3: Python (Mayo - Agosto 2026)
         {
             id: "fase3", nombre: "🟨 FASE 3 — Python y automatización", color: "#FFFF00",
+            objetivo_fase: "Dominar Python (Pandas/Seaborn) para el análisis, limpieza y visualización avanzada de datos.",
             meses: [
                 { id: "may2026", nombre: "Mayo 2026 — “Primer contacto con Python”", objetivo: "Comprender la lógica de programación.", deadline: "2026-05-31T23:59:59", tareas: [{ id: "may26-t1", descripcion: "Instalar Anaconda/Jupyter Notebook.", completada: false }, { id: "may26-t2", descripcion: "Aprender: variables, listas, diccionarios, bucles.", completada: false }, { id: "may26-t3", descripcion: "Escribir un script que calcule promedios y cuente valores.", completada: false }], resultado: "Entiendes cómo piensa un lenguaje de programación." },
                 { id: "jun2026", nombre: "Junio 2026 — “Pandas y análisis básico”", objetivo: "Manipular datasets reales y Web Scraping.", deadline: "2026-06-30T23:59:59", tareas: [{ id: "jun26-t1", descripcion: "Importar y limpiar datos con Pandas (dropna, fillna).", completada: false }, { id: "jun26-t2", descripcion: "Calcular promedios, medianas y correlaciones.", completada: false }, { id: "jun26-t3", descripcion: "Web Scraping Básico: Escribir un script simple para extraer 5 datos de una web.", completada: false }], resultado: "Sabes analizar datasets con código." },
@@ -79,6 +85,7 @@ const plan = {
         // FASE 4: Visualización profesional (Septiembre - Octubre 2026)
         {
             id: "fase4", nombre: "🟧 FASE 4 — Visualización profesional", color: "#FFA500",
+            objetivo_fase: "Dominar Power BI (PL-300) para crear dashboards interactivos y profesionales.",
             meses: [
                 { id: "sep2026", nombre: "Septiembre 2026 — “Power BI: Preparación PL-300”", objetivo: "Dominar Modelado, Preparación de Datos y DAX.", deadline: "2026-09-30T23:59:59", tareas: [{ id: "sep26-t1", descripcion: "Instalar Power BI Desktop y conectar con Excel/SQL.", completada: false }, { id: "sep26-t2", descripcion: "Estudiar para PL-300: Preparación y Modelado de datos.", completada: false }, { id: "sep26-t3", descripcion: "Crear un modelo de datos robusto (relaciones y diseño).", completada: false }, { id: "sep26-t4", descripcion: "Implementar las primeras funciones DAX.", completada: false }], resultado: "Primer dashboard profesional." },
                 { id: "oct2026", nombre: "Octubre 2026 — “Proyecto completo de dashboard”", objetivo: "Unir Diseño, Análisis y Narrativa.", deadline: "2026-10-31T23:59:59", tareas: [{ id: "oct26-t1", descripcion: "Estudiar para PL-300: Visualizar y Desplegar.", completada: false }, { id: "oct26-t2", descripcion: "Integrar múltiples fuentes (Excel + CSV + SQL).", completada: false }, { id: "oct26-t3", descripcion: "Crear KPIs y filtros avanzados.", completada: false }, { id: "oct26-t4", descripcion: "Exportar y publicar el dashboard.", completada: false }], resultado: "Tienes un proyecto digno de entrevista." }
@@ -88,6 +95,7 @@ const plan = {
         // FASE 5: Portafolio e Ingresos (Noviembre - Diciembre 2026)
         {
             id: "fase5", nombre: "🟥 FASE 5 — Portafolio e ingresos", color: "#FF0000",
+            objetivo_fase: "Monetizar conocimientos, obtener certificaciones y aplicar a puestos de Analista Junior.",
             meses: [
                 { id: "nov2026", nombre: "Noviembre 2026 — “Portafolio y visibilidad”", objetivo: "Mostrar tu trabajo de forma profesional.", deadline: "2026-11-30T23:59:59", tareas: [{ id: "nov26-t1", descripcion: "Objetivo: Obtener la Certificación PL-300 de Microsoft.", completada: false }, { id: "nov26-t2", descripcion: "Organizar tus 3 proyectos finales (Excel, Python, Power BI) en GitHub.", completada: false }, { id: "nov26-t3", descripcion: "Diseñar un portafolio simple (GitHub Pages o Notion).", completada: false }, { id: "nov26-t4", descripcion: "Actualizar tu LinkedIn con la palabra clave 'Data Analyst'.", completada: false }], resultado: "Presencia profesional sólida." },
                 { id: "dic2026", nombre: "Diciembre 2026 — “Puerta a ingresos”", objetivo: "Empezar a generar dinero.", deadline: "2026-12-31T23:59:59", tareas: [{ id: "dic26-t1", descripcion: "Buscar proyectos freelance pequeños (Workana, Upwork).", completada: false }, { id: "dic26-t2", descripcion: "Practicar entrevistas simuladas (preguntas comunes de analista).", completada: false }, { id: "dic26-t3", descripcion: "Escribir tus próximos pasos para 2027.", completada: false }, { id: "dic26-t4", descripcion: "Celebrar tu avance (sí, cuenta como paso técnico).", completada: false }], resultado: "Comienzas a monetizar o estás listo para aplicar a puestos junior." }
@@ -100,7 +108,6 @@ const plan = {
 // 3. FUNCIONES DE MANEJO DE DATOS (FIREBASE)
 // =======================================================
 
-// Guarda el estado actual del plan en Firebase
 function saveProgressToFirebase() {
     const progressToSave = {};
     plan.fases.forEach(fase => {
@@ -121,7 +128,6 @@ function saveProgressToFirebase() {
         });
 }
 
-// Carga el estado del plan desde Firebase
 function loadProgressFromFirebase() {
     return new Promise((resolve, reject) => {
         database.ref(PROGRESS_KEY).once('value')
@@ -130,13 +136,11 @@ function loadProgressFromFirebase() {
                 if (savedData) {
                     console.log("Progreso cargado desde Firebase.");
                     
-                    // Actualiza el plan local con los datos de Firebase
                     plan.fases.forEach(fase => {
                         fase.meses.forEach(mes => {
                             if (savedData[mes.id]) {
                                 mes.tareas = mes.tareas.map(localTask => {
                                     const savedTask = savedData[mes.id].find(t => t.id === localTask.id);
-                                    // Mantiene la descripción de la tarea pero actualiza el estado 'completada'
                                     return savedTask ? { ...localTask, completada: savedTask.completada } : localTask;
                                 });
                             }
@@ -149,7 +153,6 @@ function loadProgressFromFirebase() {
             })
             .catch(error => {
                 console.error("Error al cargar el progreso:", error);
-                // Resuelve aunque haya error para que la app continúe sin sincronización
                 resolve(); 
             });
     });
@@ -160,32 +163,26 @@ function loadProgressFromFirebase() {
 // 4. FUNCIONES DE RENDERING Y LÓGICA
 // =======================================================
 
-// Encuentra el módulo activo (el mes actual o el siguiente)
+// LÓGICA DE BLOQUEO: Foco en el primer mes con tareas pendientes
 function findCurrentModule() {
-    const today = new Date();
-    
     for (const fase of plan.fases) {
         for (const mes of fase.meses) {
-            const deadline = new Date(mes.deadline);
-            // Si la fecha límite aún no ha pasado, este es el mes activo
-            if (today <= deadline) {
+            const tareasPendientes = mes.tareas.filter(t => !t.completada).length;
+            
+            if (tareasPendientes > 0) {
                 return { fase: fase, modulo: mes };
             }
         }
     }
-    // Si todo terminó, retorna el último módulo
+    
     const lastFase = plan.fases[plan.fases.length - 1];
     return { fase: lastFase, modulo: lastFase.meses[lastFase.meses.length - 1] };
 }
 
-// ----------------------------------------------------
-// A. ACTUALIZAR BARRAS DE PROGRESO
-// ----------------------------------------------------
 function updateProgressBars() {
     let totalTasks = 0;
     let completedTasks = 0;
     
-    // 1. CÁLCULO GLOBAL
     plan.fases.forEach(fase => {
         fase.meses.forEach(mes => {
             totalTasks += mes.tareas.length;
@@ -195,23 +192,20 @@ function updateProgressBars() {
 
     const yearlyPercentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
     
-    // 2. CÁLCULO MENSUAL (para el módulo activo)
     const currentModuleTotal = currentModule ? currentModule.tareas.length : 0;
     const currentModuleCompleted = currentModule ? currentModule.tareas.filter(t => t.completada).length : 0;
     const monthlyPercentage = currentModuleTotal > 0 ? (currentModuleCompleted / currentModuleTotal) * 100 : 0;
 
 
-    // ACTUALIZAR HTML
     document.getElementById('yearly-bar-fill').style.width = `${yearlyPercentage}%`;
     document.getElementById('yearly-percentage').textContent = `${Math.round(yearlyPercentage)}%`;
     
     document.getElementById('monthly-bar-fill').style.width = `${monthlyPercentage}%`;
     document.getElementById('monthly-percentage').textContent = `${Math.round(monthlyPercentage)}%`;
+    
+    renderSidebar();
 }
 
-// ----------------------------------------------------
-// B. CONTADOR CIRCULAR
-// ----------------------------------------------------
 function startCountdown(deadlineStr) {
     const deadline = new Date(deadlineStr);
 
@@ -220,11 +214,11 @@ function startCountdown(deadlineStr) {
         const diff = deadline - now;
 
         const progressCircle = document.querySelector('.progress-circle');
-        const totalDuration = new Date(currentModule.deadline) - new Date(currentModule.deadline.split('-').slice(0, 2).join('-') + '-01'); // Duración del mes
+        const totalDuration = new Date(currentModule.deadline) - new Date(currentModule.deadline.split('-').slice(0, 2).join('-') + '-01');
 
         if (diff <= 0) {
             document.getElementById('days-left').textContent = 'QUEST';
-            document.getElementById('hms-left').textContent = 'COMPLETED';
+            document.getElementById('hms-left').textContent = 'COMPLETADA';
             progressCircle.style.strokeDashoffset = 0;
             return;
         }
@@ -234,10 +228,9 @@ function startCountdown(deadlineStr) {
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-        document.getElementById('days-left').textContent = `${days} DAYS`;
+        document.getElementById('days-left').textContent = `${days} DÍAS`;
         document.getElementById('hms-left').textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         
-        // CÁLCULO DEL CÍRCULO: Tiempo restante vs. tiempo total del módulo
         const remainingPercentage = (diff / totalDuration) * 100;
         const offset = CIRCUMFERENCE - (remainingPercentage / 100) * CIRCUMFERENCE;
         
@@ -248,13 +241,8 @@ function startCountdown(deadlineStr) {
     setInterval(updateCounter, 1000);
 }
 
-// ----------------------------------------------------
-// C. RENDERIZAR INTERFAZ Y MANEJO DE CLICKS
-// ----------------------------------------------------
-
 function renderCurrentModule(fase, modulo) {
-    // Títulos y Objetivos
-    document.getElementById('current-phase-title').textContent = fase.nombre;
+    document.getElementById('current-phase-title').textContent = fase.nombre.split('—')[0].trim();
     document.getElementById('current-module-title').textContent = modulo.nombre;
     document.getElementById('current-module-objective').textContent = modulo.objetivo;
     document.getElementById('outcome-text').textContent = modulo.resultado;
@@ -262,7 +250,6 @@ function renderCurrentModule(fase, modulo) {
     const tasksList = document.getElementById('current-tasks');
     tasksList.innerHTML = ''; 
 
-    // Inyectar las tareas con sus checkboxes
     modulo.tareas.forEach(task => {
         const li = document.createElement('li');
         li.innerHTML = `
@@ -273,7 +260,6 @@ function renderCurrentModule(fase, modulo) {
             li.classList.add('completed');
         }
         
-        // Asigna el evento de click
         li.querySelector('.task-checkbox').addEventListener('click', handleTaskClick); 
         tasksList.appendChild(li);
     });
@@ -282,14 +268,58 @@ function renderCurrentModule(fase, modulo) {
     updateProgressBars();
 }
 
+// LÓGICA DE RADAR: Renderizado del Sidebar con Fases y Colores
 function renderSidebar() {
     const phasesList = document.getElementById('phases-list');
     phasesList.innerHTML = '';
+    const colorOff = getComputedStyle(document.documentElement).getPropertyValue('--color-off').trim();
 
     plan.fases.forEach(fase => {
-        const li = document.createElement('li');
-        li.innerHTML = `<span style="color: ${fase.color}">■</span> ${fase.nombre.split('—')[0].trim()}`;
-        phasesList.appendChild(li);
+        // 1. CÁLCULO de progreso de la FASE
+        let faseTotalTasks = 0;
+        let faseCompletedTasks = 0;
+        fase.meses.forEach(mes => {
+            faseTotalTasks += mes.tareas.length;
+            faseCompletedTasks += mes.tareas.filter(t => t.completada).length;
+        });
+        const fasePercentage = faseTotalTasks > 0 ? (faseCompletedTasks / faseTotalTasks) * 100 : 0;
+        const isFaseCompleted = fasePercentage === 100;
+        
+        const faseColor = isFaseCompleted ? fase.color : colorOff;
+        const faseTitleClass = isFaseCompleted ? 'completed-phase' : '';
+
+        // 2. TÍTULO DE FASE con Objetivo
+        const faseLi = document.createElement('li');
+        faseLi.innerHTML = `
+            <span class="phase-title-line ${faseTitleClass}" style="color: ${faseColor};">
+                ■ ${fase.nombre.split('—')[0].trim()} (${Math.round(fasePercentage)}%)
+            </span>
+            <span class="phase-objective-line">
+                OBJETIVO: ${fase.objetivo_fase || 'N/A'}
+            </span>
+            <div class="bar-bg" style="width: 90%; margin: 3px 0;">
+                <div class="bar-fill" style="width: ${fasePercentage}%; background-color: ${fase.color}; height: 8px;"></div>
+            </div>
+            <ul style="padding-left: 5px; margin-top: 5px; list-style: none;">
+        `;
+        phasesList.appendChild(faseLi);
+        
+        // 3. LISTADO DE MESES DENTRO DE LA FASE
+        fase.meses.forEach(mes => {
+            const mesTotalTasks = mes.tareas.length;
+            const mesCompletedTasks = mes.tareas.filter(t => t.completada).length;
+            const mesPercentage = mesTotalTasks > 0 ? (mesCompletedTasks / mesTotalTasks) * 100 : 0;
+            
+            const mesLi = document.createElement('li');
+            mesLi.style.fontFamily = 'monospace';
+            mesLi.style.fontSize = '0.75rem';
+            mesLi.innerHTML = `
+                ${mes.nombre.split('—')[0].trim()} (${Math.round(mesPercentage)}%)
+                <div class="bar-bg" style="width: 80%; margin: 2px 0;"><div class="bar-fill" style="width: ${mesPercentage}%; background-color: var(--neon-blue); height: 6px;"></div></div>
+            `;
+            phasesList.appendChild(mesLi);
+        });
+        phasesList.appendChild(document.createElement('br'));
     });
 }
 
@@ -298,7 +328,6 @@ function handleTaskClick(event) {
     const listItem = event.currentTarget.parentNode;
     const isCompleted = listItem.classList.toggle('completed');
 
-    // 1. Actualizar el estado en la data local
     currentModule.tareas = currentModule.tareas.map(t => {
         if (t.id === taskId) {
             t.completada = isCompleted;
@@ -306,32 +335,34 @@ function handleTaskClick(event) {
         return t;
     });
 
-    // 2. Recalcular las barras de progreso
     updateProgressBars();
-    
-    // 3. ¡GUARDA EL PROGRESO EN FIREBASE!
     saveProgressToFirebase(); 
+    
+    // Chequea si el módulo se completó para forzar un cambio de foco
+    if (currentModule.tareas.every(t => t.completada)) {
+        // Recarga para ir al siguiente mes bloqueado
+        loadProgressFromFirebase().then(() => {
+            const { fase, modulo } = findCurrentModule();
+            currentModule = modulo;
+            renderCurrentModule(fase, modulo);
+        });
+    }
 }
 
 
 // =======================================================
-// 5. INICIO DE LA APLICACIÓN (ESPERA A LA CARGA DE FIREBASE)
+// 5. INICIO DE LA APLICACIÓN
 // =======================================================
 
 window.onload = function() {
-    // 1. CARGA LA DATA DE FIREBASE Y ESPERA
     loadProgressFromFirebase().then(() => {
         const { fase, modulo } = findCurrentModule();
         currentModule = modulo;
         
-        // 2. RENDERIZA EL CONTENIDO
         renderCurrentModule(fase, modulo);
-        renderSidebar();
         
-        // 3. Ajusta el estilo SVG
         const progressCircle = document.querySelector('.progress-circle');
         if (progressCircle) {
-            // Inicializa la propiedad para que el contador funcione correctamente
             progressCircle.style.strokeDasharray = `${CIRCUMFERENCE} ${CIRCUMFERENCE}`;
         }
     });
