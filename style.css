@@ -14,11 +14,11 @@
     --font-mono: monospace;
 
     /* Colores para las fases */
-    --phase1-color: #00FF00; /* Green */
-    --phase2-color: #00FFFF; /* Blue */
-    --phase3-color: #FFFF00; /* Yellow */
-    --phase4-color: #FFA500; /* Orange */
-    --phase5-color: #FF0000; /* Red */
+    --phase1-color: #00FF00; 
+    --phase2-color: #00FFFF; 
+    --phase3-color: #FFFF00; 
+    --phase4-color: #FFA500; 
+    --phase5-color: #FF0000; 
     --color-off: #333333; /* Color apagado para fases no completadas */
 }
 
@@ -33,7 +33,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    overflow-x: hidden; /* Evita el scroll horizontal en móviles */
+    overflow-x: hidden; 
     background-image: radial-gradient(#303030 5%, transparent 5%), radial-gradient(#303030 5%, transparent 5%);
     background-size: 20px 20px;
     background-position: 0 0, 10px 10px;
@@ -58,10 +58,11 @@ h1 { font-size: 1.5rem; color: var(--neon-magenta); text-shadow: 0 0 5px var(--n
 h2, h3 { font-size: 1rem; color: var(--neon-blue); margin-top: 15px; }
 .objective-text { font-size: 0.8rem; margin-bottom: 20px; color: var(--light-gray-text); }
 
+/* Ajuste de tipografía para contenido y tareas (arregla el "hoyo negro") */
 p, ul, .module-objective { 
-    font-size: 0.9rem; /* Un poco más grande para mejor lectura */
+    font-size: 0.9rem; 
     font-family: var(--font-mono); 
-    line-height: 1.4; /* Mejora la legibilidad */
+    line-height: 1.4; 
     color: var(--light-gray-text);
 }
 
@@ -144,10 +145,10 @@ p, ul, .module-objective {
 #days-left { font-size: 2rem; }
 #hms-left { font-size: 1.2rem; }
 
-/* Estilos de las Fases en el Sidebar (Color apagado/encendido) */
+/* Estilos de las Fases en el Sidebar (Radar de Misión) */
 #phases-list li {
     font-family: var(--font-mono);
-    margin-bottom: 15px; /* Espacio para el objetivo */
+    margin-bottom: 15px; 
     color: var(--medium-gray-text);
 }
 #phases-list .phase-title-line {
@@ -168,7 +169,7 @@ p, ul, .module-objective {
 }
 
 
-/* --- RESPONSIVIDAD: VISTA MÓVIL (MENOS DE 768PX) --- */
+/* --- RESPONSIVIDAD: VISTA MÓVIL (ARREGLO DEL AMONTONAMIENTO) --- */
 @media (max-width: 768px) {
     .container {
         /* Se apilan verticalmente */
@@ -180,20 +181,12 @@ p, ul, .module-objective {
     .game-header {
         text-align: center;
     }
-
-    h1 { font-size: 1.2rem; }
-    h2, h3 { font-size: 0.9rem; }
-    p, ul, .module-objective, .objective-text { font-size: 0.8rem; }
-    
-    /* El contador ocupa todo el ancho de la pantalla */
     .countdown-container {
         width: 150px;
         height: 150px;
     }
-    #days-left { font-size: 1.5rem; }
-    #hms-left { font-size: 1rem; }
     
-    /* El panel lateral debe quedar más compacto */
+    /* El panel lateral se empuja hacia abajo sin amontonarse */
     .sidebar {
         margin-top: 20px;
         border-top: 2px solid var(--neon-blue);
