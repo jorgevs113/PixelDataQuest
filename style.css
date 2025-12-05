@@ -2,12 +2,9 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    /* FONDO BASE (Si falla el gradiente) */
     background-color: #050011; 
-    
-    /* GRADIENTE DE FONDO (VIOLETA OSCURO A NEGRO) */
-    background-image: radial-gradient(circle at 50% 0%, #240046 0%, #10002b 40%, #000000 100%);
-    
+    /* Fondo base: Un degradado violeta más visible arriba */
+    background-image: radial-gradient(circle at 50% 0%, #3c096c 0%, #10002b 50%, #000000 100%);
     color: #E0E0E0;
     font-family: 'VT323', monospace;
     font-size: 22px;
@@ -17,12 +14,12 @@ body {
     position: relative;
 }
 
-/* === EL INTERLINEADO (GRID) HECHO CON CÓDIGO === */
+/* === EL INTERLINEADO (GRID) === */
 .retro-background {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1; /* Se va al fondo */
-    perspective: 1000px; /* Le da profundidad 3D */
+    z-index: -1;
+    perspective: 1000px; /* Profundidad 3D */
     overflow: hidden;
 }
 
@@ -31,45 +28,37 @@ body {
     width: 200%; height: 200%;
     left: -50%; top: -50%;
     
-    /* AQUÍ ESTÁ LA MAGIA: DIBUJAR LÍNEAS CON GRADIENTES */
+    /* LÍNEAS NEÓN MÁS BRILLANTES (Opacidad 0.5) */
     background-image: 
-        /* Líneas Horizontales (Violeta Neón Transparente) */
-        linear-gradient(rgba(224, 170, 255, 0.2) 1px, transparent 1px),
-        /* Líneas Verticales */
-        linear-gradient(90deg, rgba(224, 170, 255, 0.2) 1px, transparent 1px);
+        linear-gradient(rgba(224, 170, 255, 0.5) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(224, 170, 255, 0.5) 2px, transparent 2px);
         
-    /* Tamaño de cada cuadro de la rejilla */
-    background-size: 50px 50px; 
+    background-size: 60px 60px; /* Cuadros más grandes */
     
-    /* Inclinamos el piso para que se vea 3D */
-    transform: rotateX(45deg); 
+    transform: rotateX(60deg); /* Más inclinado para efecto profundidad */
+    animation: moveGrid 5s linear infinite; /* Movimiento más rápido */
     
-    /* Animación de movimiento */
-    animation: moveGrid 15s linear infinite;
-    
-    /* Sombra interna para que se desvanezca en el horizonte */
-    box-shadow: inset 0 0 100px #000; 
+    /* Sombra para que se pierda en el horizonte */
+    box-shadow: inset 0 0 150px #000; 
 }
 
-/* Animación que mueve el piso infinito */
 @keyframes moveGrid {
     0% { background-position: 0 0; }
-    100% { background-position: 0 50px; }
+    100% { background-position: 0 60px; }
 }
 
 /* === EFECTO DE TELEVISIÓN (SCANLINES) === */
 .scanlines {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    /* Rayitas finas estilo TV */
     background: repeating-linear-gradient(
         to bottom,
         transparent 0px,
         transparent 2px,
-        rgba(0,0,0,0.3) 3px
+        rgba(0,0,0,0.2) 3px
     );
-    pointer-events: none; /* Dejar hacer clic a través de ellas */
-    z-index: 999; /* Encima de todo */
+    pointer-events: none;
+    z-index: 999;
 }
 
 /* --- ESTILOS DE TEXTO --- */
@@ -82,9 +71,8 @@ h1, h2, h3, .player-name, .goal-text, .badge {
 .header-logo-area { text-align: center; margin-bottom: 20px; }
 
 .game-logo {
-    max-width: 500px; /* Tamaño máximo del logo */
+    max-width: 500px;
     width: 90%;
-    /* Un brillo sutil violeta detrás del logo */
     filter: drop-shadow(0 0 15px rgba(189, 0, 255, 0.6));
     animation: floatLogo 4s ease-in-out infinite;
 }
@@ -102,18 +90,18 @@ h1, h2, h3, .player-name, .goal-text, .badge {
     z-index: 10;
 }
 
-/* PANELES DE CRISTAL (Glassmorphism Oscuro) */
+/* Paneles de Cristal */
 .glass-panel, .phase-card {
-    background: rgba(15, 5, 30, 0.8); /* Violeta muy oscuro transparente */
-    border: 2px solid rgba(157, 78, 221, 0.5); /* Borde Violeta */
+    background: rgba(15, 5, 30, 0.85); /* Fondo oscuro semitransparente */
+    border: 2px solid rgba(157, 78, 221, 0.5);
     box-shadow: 0 0 15px rgba(157, 78, 221, 0.2);
     backdrop-filter: blur(5px);
 }
 
-/* HUD (Panel Superior) */
+/* HUD Superior */
 .hud-panel {
     padding: 20px; margin-bottom: 30px;
-    border-color: #e0aaff; /* Lila brillante */
+    border-color: #e0aaff;
 }
 
 .hud-row {
@@ -125,7 +113,7 @@ h1, h2, h3, .player-name, .goal-text, .badge {
 .goal-text { color: #ff9e00; text-shadow: 0 0 5px #ff9e00; font-size: 14px; }
 .deadline-text { color: #ff0054; text-shadow: 0 0 10px #ff0054; font-size: 18px; }
 
-/* BARRAS DE PROGRESO */
+/* Barras de Progreso */
 .progress-bar-container {
     flex-grow: 1; height: 30px;
     background: #10002b; border: 2px solid #5a189a;
@@ -133,11 +121,7 @@ h1, h2, h3, .player-name, .goal-text, .badge {
 }
 
 .progress-fill { height: 100%; transition: width 0.8s ease; }
-
-.gold-fill { 
-    background: linear-gradient(90deg, #ff9e00, #ffea00); 
-    box-shadow: 0 0 15px #ff9e00;
-}
+.gold-fill { background: linear-gradient(90deg, #ff9e00, #ffea00); box-shadow: 0 0 15px #ff9e00; }
 
 /* BADGES */
 .badges-panel {
@@ -153,7 +137,6 @@ h1, h2, h3, .player-name, .goal-text, .badge {
     text-align: center; font-size: 10px; color: #9d4edd;
     border-radius: 8px;
 }
-
 .badge.unlocked {
     border-color: #e0aaff; color: #fff;
     background: rgba(224, 170, 255, 0.2);
@@ -166,10 +149,7 @@ h1, h2, h3, .player-name, .goal-text, .badge {
     margin-bottom: 40px; padding: 20px;
     transition: transform 0.3s;
 }
-
-.phase-header {
-    border-bottom: 2px dashed #5a189a; margin-bottom: 15px; padding-bottom: 10px;
-}
+.phase-header { border-bottom: 2px dashed #5a189a; margin-bottom: 15px; padding-bottom: 10px; }
 .phase-title { font-size: 18px; margin-bottom: 10px; color: #fff; }
 
 /* TAREAS */
@@ -179,10 +159,7 @@ h1, h2, h3, .player-name, .goal-text, .badge {
     background: rgba(255,255,255,0.03);
     cursor: pointer; border: 1px solid transparent;
 }
-.task-item:hover {
-    background: rgba(157, 78, 221, 0.2);
-    border-color: #e0aaff;
-}
+.task-item:hover { background: rgba(157, 78, 221, 0.2); border-color: #e0aaff; }
 
 .pixel-checkbox {
     width: 24px; height: 24px;
@@ -200,7 +177,6 @@ h1, h2, h3, .player-name, .goal-text, .badge {
 
 /* COMPLETADO */
 .phase-card.completed { opacity: 0.5; filter: grayscale(80%); border-color: #333 !important; }
-
 .mission-complete-stamp {
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%) rotate(-10deg);
