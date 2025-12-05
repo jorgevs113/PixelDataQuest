@@ -1,270 +1,226 @@
-/* RESET BÁSICO */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+/* --- RESET BÁSICO --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    background-color: #101010; /* Negro casi puro */
+    /* FONDO BASE (Si falla el gradiente) */
+    background-color: #050011; 
+    
+    /* GRADIENTE DE FONDO (VIOLETA OSCURO A NEGRO) */
+    background-image: radial-gradient(circle at 50% 0%, #240046 0%, #10002b 40%, #000000 100%);
+    
     color: #E0E0E0;
-    font-family: 'VT323', monospace; /* Fuente para texto normal */
-    font-size: 20px;
+    font-family: 'VT323', monospace;
+    font-size: 22px;
     padding: 20px;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
 }
 
-h1, h2, h3, .player-name, .goal-text {
-    font-family: 'Press Start 2P', cursive; /* Fuente pixelada gruesa */
+/* === EL INTERLINEADO (GRID) HECHO CON CÓDIGO === */
+.retro-background {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1; /* Se va al fondo */
+    perspective: 1000px; /* Le da profundidad 3D */
+    overflow: hidden;
+}
+
+.synthwave-grid {
+    position: absolute;
+    width: 200%; height: 200%;
+    left: -50%; top: -50%;
+    
+    /* AQUÍ ESTÁ LA MAGIA: DIBUJAR LÍNEAS CON GRADIENTES */
+    background-image: 
+        /* Líneas Horizontales (Violeta Neón Transparente) */
+        linear-gradient(rgba(224, 170, 255, 0.2) 1px, transparent 1px),
+        /* Líneas Verticales */
+        linear-gradient(90deg, rgba(224, 170, 255, 0.2) 1px, transparent 1px);
+        
+    /* Tamaño de cada cuadro de la rejilla */
+    background-size: 50px 50px; 
+    
+    /* Inclinamos el piso para que se vea 3D */
+    transform: rotateX(45deg); 
+    
+    /* Animación de movimiento */
+    animation: moveGrid 15s linear infinite;
+    
+    /* Sombra interna para que se desvanezca en el horizonte */
+    box-shadow: inset 0 0 100px #000; 
+}
+
+/* Animación que mueve el piso infinito */
+@keyframes moveGrid {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 50px; }
+}
+
+/* === EFECTO DE TELEVISIÓN (SCANLINES) === */
+.scanlines {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* Rayitas finas estilo TV */
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 2px,
+        rgba(0,0,0,0.3) 3px
+    );
+    pointer-events: none; /* Dejar hacer clic a través de ellas */
+    z-index: 999; /* Encima de todo */
+}
+
+/* --- ESTILOS DE TEXTO --- */
+h1, h2, h3, .player-name, .goal-text, .badge {
+    font-family: 'Press Start 2P', cursive;
     text-transform: uppercase;
 }
 
-/* CONTENEDOR PRINCIPAL */
+/* LOGO ÁREA */
+.header-logo-area { text-align: center; margin-bottom: 20px; }
+
+.game-logo {
+    max-width: 500px; /* Tamaño máximo del logo */
+    width: 90%;
+    /* Un brillo sutil violeta detrás del logo */
+    filter: drop-shadow(0 0 15px rgba(189, 0, 255, 0.6));
+    animation: floatLogo 4s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* --- CONTENEDORES --- */
 .main-container {
     max-width: 800px;
     margin: 0 auto;
+    position: relative;
+    z-index: 10;
 }
 
-/* 1. HUD SUPERIOR */
+/* PANELES DE CRISTAL (Glassmorphism Oscuro) */
+.glass-panel, .phase-card {
+    background: rgba(15, 5, 30, 0.8); /* Violeta muy oscuro transparente */
+    border: 2px solid rgba(157, 78, 221, 0.5); /* Borde Violeta */
+    box-shadow: 0 0 15px rgba(157, 78, 221, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+/* HUD (Panel Superior) */
 .hud-panel {
-    border: 4px solid #FFF;
-    padding: 15px;
-    margin-bottom: 20px;
-    background-color: #000;
+    padding: 20px; margin-bottom: 30px;
+    border-color: #e0aaff; /* Lila brillante */
 }
 
 .hud-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    flex-wrap: wrap;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 15px; flex-wrap: wrap;
 }
 
-.player-name { color: #00FF00; font-size: 12px; line-height: 1.5; }
-.goal-text { color: #FFFF00; font-size: 12px; }
-.deadline-text { color: #FF0055; font-size: 18px; }
+.player-name { color: #e0aaff; text-shadow: 0 0 5px #e0aaff; font-size: 14px; }
+.goal-text { color: #ff9e00; text-shadow: 0 0 5px #ff9e00; font-size: 14px; }
+.deadline-text { color: #ff0054; text-shadow: 0 0 10px #ff0054; font-size: 18px; }
 
 /* BARRAS DE PROGRESO */
 .progress-bar-container {
-    flex-grow: 1;
-    height: 25px;
-    background-color: #333;
-    border: 2px solid #FFF;
-    margin: 0 15px;
-    position: relative;
+    flex-grow: 1; height: 30px;
+    background: #10002b; border: 2px solid #5a189a;
+    margin: 0 15px; position: relative; overflow: hidden;
 }
 
-.progress-fill {
-    height: 100%;
-    transition: width 0.5s ease-in-out;
-    background-image: repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 10px,
-        rgba(0,0,0,0.2) 10px,
-        rgba(0,0,0,0.2) 20px
-    );
+.progress-fill { height: 100%; transition: width 0.8s ease; }
+
+.gold-fill { 
+    background: linear-gradient(90deg, #ff9e00, #ffea00); 
+    box-shadow: 0 0 15px #ff9e00;
 }
 
-.gold-fill { background-color: #FFD700; }
-.level-fill { background-color: #00FF00; } /* Se cambia dinámicamente */
-
-/* 2. BADGES / TROFEOS */
+/* BADGES */
 .badges-panel {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
+    display: flex; justify-content: center; gap: 15px;
+    margin-bottom: 30px; flex-wrap: wrap;
 }
 
 .badge {
-    background: #222;
-    border: 2px solid #555;
-    padding: 10px;
-    font-family: 'Press Start 2P';
-    font-size: 10px;
-    color: #555; /* Apagado */
-    text-align: center;
-    width: 100px;
+    background: rgba(0,0,0,0.5);
+    border: 2px solid #3c096c;
+    width: 80px; height: 80px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; font-size: 10px; color: #9d4edd;
+    border-radius: 8px;
 }
 
 .badge.unlocked {
-    border-color: #FFD700;
-    color: #FFF;
-    background: #333;
-    box-shadow: 0 0 10px #FFD700;
-    animation: bounce 0.5s;
+    border-color: #e0aaff; color: #fff;
+    background: rgba(224, 170, 255, 0.2);
+    box-shadow: 0 0 15px #e0aaff;
+    transform: scale(1.1);
 }
 
-@keyframes bounce {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-/* 3. TARJETAS DE NIVEL */
+/* TARJETAS DE NIVEL */
 .phase-card {
-    border: 4px solid #444;
-    background-color: #1a1a1a;
-    margin-bottom: 30px;
-    padding: 15px;
-    position: relative;
+    margin-bottom: 40px; padding: 20px;
+    transition: transform 0.3s;
 }
 
 .phase-header {
-    margin-bottom: 15px;
-    border-bottom: 2px dashed #444;
-    padding-bottom: 10px;
+    border-bottom: 2px dashed #5a189a; margin-bottom: 15px; padding-bottom: 10px;
 }
+.phase-title { font-size: 18px; margin-bottom: 10px; color: #fff; }
 
-.phase-title {
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #FFF;
-}
-
-.phase-deadline {
-    font-size: 18px;
-    color: #FF5555;
-}
-
-/* Estilos de Tareas */
+/* TAREAS */
 .task-item {
-    display: flex;
-    align-items: flex-start;
-    padding: 8px;
-    margin-bottom: 5px;
-    border: 1px solid transparent;
-    cursor: pointer;
+    display: flex; align-items: flex-start;
+    padding: 12px; margin-bottom: 8px;
+    background: rgba(255,255,255,0.03);
+    cursor: pointer; border: 1px solid transparent;
 }
-
 .task-item:hover {
-    background-color: #222;
-    border: 1px solid #555;
+    background: rgba(157, 78, 221, 0.2);
+    border-color: #e0aaff;
 }
 
 .pixel-checkbox {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #FFF;
-    margin-right: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    width: 24px; height: 24px;
+    border: 2px solid #9d4edd; margin-right: 15px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
 }
+.pixel-checkbox.checked {
+    background: #00ff00; border-color: #00ff00;
+    box-shadow: 0 0 10px #00ff00;
+}
+.pixel-checkbox.checked::after { content: '✔'; color: #000; font-size: 14px; }
 
-.pixel-checkbox.checked::after {
-    content: 'X';
-    font-family: 'Press Start 2P';
-    font-size: 12px;
-    color: #00FF00;
-}
+.task-content h4 { font-size: 20px; margin-bottom: 5px; color: #e0aaff; }
+.task-content p { font-size: 16px; color: #c77dff; font-family: sans-serif; }
 
-.task-content h4 {
-    font-size: 22px;
-    margin-bottom: 2px;
-}
-
-.task-content p {
-    font-size: 16px;
-    color: #888;
-}
-
-/* ESTADO: COMPLETADO (MISSION COMPLETE) */
-.phase-card.completed {
-    border-color: #444 !important;
-    opacity: 0.6;
-    filter: grayscale(100%);
-    pointer-events: none; /* No se puede clicar */
-}
+/* COMPLETADO */
+.phase-card.completed { opacity: 0.5; filter: grayscale(80%); border-color: #333 !important; }
 
 .mission-complete-stamp {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%) rotate(-10deg);
-    border: 5px double #00FF00;
-    padding: 10px 20px;
-    font-family: 'Press Start 2P';
-    color: #00FF00;
-    font-size: 20px;
-    background: rgba(0,0,0,0.8);
-    z-index: 10;
-    display: none; /* Oculto por defecto */
+    border: 4px solid #00ff00; padding: 10px 20px;
+    font-family: 'Press Start 2P'; color: #00ff00;
+    background: #000; z-index: 20; display: none;
+    box-shadow: 0 0 20px #00ff00; text-align: center;
 }
+.phase-card.completed .mission-complete-stamp { display: block; }
 
-.phase-card.completed .mission-complete-stamp {
-    display: block;
-}
-/* =========================================
-   MODO CELULAR (RESPONSIVE)
-   Estas reglas solo aplican si la pantalla 
-   es menor a 768px (Tablets y Celulares)
-   ========================================= */
+/* === RESPONSIVE CELULAR === */
 @media (max-width: 768px) {
-    
-    /* 1. Aumentamos la letra base de todo */
-    body {
-        font-size: 24px; /* En PC es 22px */
-    }
-
-    /* 2. Título de la Fase (Nivel) mucho más grande */
-    .phase-title {
-        font-size: 24px; 
-        text-align: center; /* Centrado se ve mejor en cel */
-    }
-
-    /* 3. Las tareas (Lo más importante) */
-    .task-item {
-        padding: 15px; /* Más espacio para el dedo */
-    }
-
-    .task-content h4 {
-        font-size: 26px; /* Título de la tarea */
-        margin-bottom: 8px;
-    }
-
-    .task-content p {
-        font-size: 20px; /* Descripción (antes era 16px, muy chica) */
-        line-height: 1.4;
-        color: #bbb; /* Un poco más brillante para leer mejor */
-    }
-
-    /* 4. Checkbox más grande (para dedo gordo) */
-    .pixel-checkbox {
-        width: 35px;       /* Antes 24px */
-        height: 35px;      /* Antes 24px */
-        margin-right: 15px;
-    }
-
-    .pixel-checkbox.checked::after {
-        font-size: 20px;   /* La palomita/tache más grande */
-    }
-
-    /* 5. Ajustar el HUD (Panel de arriba) para que no se amontone */
-    .hud-row {
-        flex-direction: column; /* Poner cosas una abajo de otra */
-        gap: 10px;
-        text-align: center;
-    }
-
-    .progress-bar-container {
-        width: 100%; /* Barra de progreso ocupa todo el ancho */
-        margin: 10px 0;
-    }
-    
-    .player-name, .goal-text {
-        font-size: 16px; /* Nombres un poco más grandes */
-        width: 100%;     /* Que ocupen toda la linea */
-        text-align: center;
-        margin-bottom: 5px;
-    }
-    
-    /* 6. Título NEÓN principal */
-    .neon-title {
-        font-size: 28px; /* Ajustar para que quepa en pantalla vertical */
-        line-height: 1.2;
-    }
+    body { font-size: 24px; }
+    .game-logo { width: 100%; }
+    .phase-title { font-size: 22px; text-align: center; }
+    .task-item { padding: 15px; }
+    .task-content h4 { font-size: 24px; margin-bottom: 8px; }
+    .task-content p { font-size: 20px; line-height: 1.4; }
+    .pixel-checkbox { width: 40px; height: 40px; margin-right: 15px; }
+    .pixel-checkbox.checked::after { font-size: 24px; }
+    .hud-row { flex-direction: column; gap: 10px; text-align: center; }
+    .progress-bar-container { width: 100%; height: 40px; }
 }
