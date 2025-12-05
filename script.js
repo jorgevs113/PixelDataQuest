@@ -28,11 +28,11 @@ const dbRef = ref(db, 'phases');
 onValue(dbRef, (snapshot) => {
     const data = snapshot.val();
     if (data) {
-        // Convertimos el objeto/array de Firebase a un Array manipulable
+        // Convertimos los datos a una lista
         let phasesArray = Object.values(data);
         renderApp(phasesArray);
     } else {
-        phasesContainer.innerHTML = "<p>Cargando datos...</p>";
+        phasesContainer.innerHTML = "<p style='text-align:center; color:white;'>Esperando datos del servidor...</p>";
     }
 });
 
@@ -43,41 +43,35 @@ function renderApp(phases) {
     let totalTasks = 0;
     let completedTasksGlobal = 0;
 
-    // 1. PRE-PROCESAMIENTO: Calcular estados antes de ordenar
+    // 1. CALCULAR ESTADOS
     phases.forEach(phase => {
-        if (!phase.tasks) phase.tasks = []; // Protección si no hay tareas
+        if (!phase.tasks) phase.tasks = [];
         const completedCount = phase.tasks.filter(t => t.done).length;
-        // Agregamos una propiedad temporal 'isCompleted'
+        // Marcamos si está completa al 100%
         phase.isCompleted = (completedCount === phase.tasks.length && phase.tasks.length > 0);
         
-        // Sumamos al global
+        // Sumar al global
         totalTasks += phase.tasks.length;
         completedTasksGlobal += completedCount;
     });
 
-    // 2. ORDENAMIENTO MAGICO: Activos arriba, Completados abajo
-    phases.sort((a, b) => {
-        // Si ambos tienen el mismo estado (ambos incompletos o ambos completos),
-        // ordénalos por su ID original (Nivel 1, luego Nivel 2...)
-        if (a.isCompleted === b.isCompleted) {
-            return a.id - b.id;
-        }
-        // Si no, pon los completados (true) al final
-        return a.isCompleted ? 1 : -1;
-    });
+    // 2. ORDENAMIENTO AGRESIVO (SEPARAR LISTAS)
+    // Creamos dos listas separadas
+    const activePhases = phases.filter(p => !p.isCompleted).sort((a, b) => a.id - b.id);
+    const completedPhases = phases.filter(p => p.isCompleted).sort((a, b) => a.id - b.id);
 
-    // 3. RENDERIZADO (DIBUJAR EN PANTALLA)
-    phases.forEach((phase) => {
-        // Recalculamos porcentaje para dibujar la barra
+    // Las unimos: Primero las activas, al final las completadas
+    const sortedPhases = [...activePhases, ...completedPhases];
+
+    // 3. DIBUJAR TARJETAS (Usamos la lista ya ordenada)
+    sortedPhases.forEach((phase) => {
         const phaseCompletedTasks = phase.tasks.filter(t => t.done).length;
         const phaseTotalTasks = phase.tasks.length;
         const phasePercent = phaseTotalTasks === 0 ? 0 : Math.round((phaseCompletedTasks / phaseTotalTasks) * 100);
 
-        // Crear la tarjeta HTML
         const card = document.createElement('div');
         card.classList.add('phase-card');
         
-        // Si está completa, añadimos clase y sello
         if (phase.isCompleted) {
             card.classList.add('completed');
         }
@@ -98,19 +92,16 @@ function renderApp(phases) {
                 </div>
             </div>
 
-            <div class="tasks-list">
-                </div>
+            <div class="tasks-list"></div>
         `;
 
         const taskListContainer = card.querySelector('.tasks-list');
         
-        // Dibujar las tareas dentro de la tarjeta
         phase.tasks.forEach((task) => {
             const taskItem = document.createElement('div');
             taskItem.classList.add('task-item');
             
-            // Usamos phase.id para saber cuál actualizar en la BD, 
-            // no el índice del array ordenado
+            // IMPORTANTE: Usamos phase.id para saber cuál actualizar en la BD
             taskItem.onclick = () => toggleTask(phase.id, task.id, task.done);
 
             taskItem.innerHTML = `
@@ -124,19 +115,11 @@ function renderApp(phases) {
         });
 
         phasesContainer.appendChild(card);
-
-        // Crear el Trofeo (Badge)
-        // Nota: Los trofeos SÍ los queremos en orden original (1, 2, 3, 4, 5)
-        // Así que no los dibujamos aquí, los guardamos y dibujamos al final o usamos lógica diferente.
-        // TRUCO: Como ya ordenamos 'phases', los badges saldrían desordenados.
-        // Vamos a dibujar los badges APARTE basándonos en el ID.
     });
 
-    // 4. RENDERIZADO DE BADGES (En orden correcto 1-5)
-    // Reordenamos temporalmente por ID solo para los badges
-    const sortedBadges = [...phases].sort((a, b) => a.id - b.id);
-    
-    sortedBadges.forEach(phase => {
+    // 4. DIBUJAR TROFEOS (En orden numérico 1 al 5 siempre)
+    const numericPhases = [...phases].sort((a, b) => a.id - b.id);
+    numericPhases.forEach(phase => {
         const badge = document.createElement('div');
         badge.classList.add('badge');
         if (phase.isCompleted) badge.classList.add('unlocked');
@@ -144,15 +127,15 @@ function renderApp(phases) {
         badgesContainer.appendChild(badge);
     });
 
-    // 5. Actualizar Barra Global
+    // 5. ACTUALIZAR BARRA GLOBAL
     const globalPercent = totalTasks === 0 ? 0 : Math.round((completedTasksGlobal / totalTasks) * 100);
     globalProgressBar.style.width = `${globalPercent}%`;
     globalPercentText.innerText = `${globalPercent}%`;
 }
 
+// FUNCION GLOBAL PARA ACTUALIZAR
 window.toggleTask = function(phaseId, taskId, currentStatus) {
     const updates = {};
     updates[`phases/${phaseId}/tasks/${taskId}/done`] = !currentStatus;
     update(ref(db), updates);
 };
-
