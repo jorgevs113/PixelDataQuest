@@ -5,13 +5,13 @@ import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/fireb
 // ⚠️ PEGA AQUÍ TU CONFIGURACIÓN DE FIREBASE (IGNORE EL EJEMPLO)
 // --------------------------------------------------------
 const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "TU_PROYECTO.firebaseapp.com",
-  databaseURL: "https://TU_PROYECTO.firebaseio.com",
-  projectId: "TU_PROYECTO",
-  storageBucket: "TU_PROYECTO.appspot.com",
-  messagingSenderId: "NUMEROS",
-  appId: "NUMEROS"
+  apiKey: "AIzaSyAsc6sCTXDevRtwd-wa9uEksHng2syt9f0",
+  authDomain: "pixeldataquest-jorge.firebaseapp.com",
+  databaseURL: "https://pixeldataquest-jorge-default-rtdb.firebaseio.com",
+  projectId: "pixeldataquest-jorge",
+  storageBucket: "pixeldataquest-jorge.firebasestorage.app",
+  messagingSenderId: "1017478767394",
+  appId: "1:1017478767394:web:b9ecb4c50484e596757b7b"
 };
 // --------------------------------------------------------
 
@@ -155,3 +155,4 @@ window.toggleTask = function(phaseId, taskId, currentStatus) {
     updates[`phases/${phaseId}/tasks/${taskId}/done`] = !currentStatus;
     update(ref(db), updates);
 };
+
