@@ -198,3 +198,73 @@ h1, h2, h3, .player-name, .goal-text {
 .phase-card.completed .mission-complete-stamp {
     display: block;
 }
+/* =========================================
+   MODO CELULAR (RESPONSIVE)
+   Estas reglas solo aplican si la pantalla 
+   es menor a 768px (Tablets y Celulares)
+   ========================================= */
+@media (max-width: 768px) {
+    
+    /* 1. Aumentamos la letra base de todo */
+    body {
+        font-size: 24px; /* En PC es 22px */
+    }
+
+    /* 2. Título de la Fase (Nivel) mucho más grande */
+    .phase-title {
+        font-size: 24px; 
+        text-align: center; /* Centrado se ve mejor en cel */
+    }
+
+    /* 3. Las tareas (Lo más importante) */
+    .task-item {
+        padding: 15px; /* Más espacio para el dedo */
+    }
+
+    .task-content h4 {
+        font-size: 26px; /* Título de la tarea */
+        margin-bottom: 8px;
+    }
+
+    .task-content p {
+        font-size: 20px; /* Descripción (antes era 16px, muy chica) */
+        line-height: 1.4;
+        color: #bbb; /* Un poco más brillante para leer mejor */
+    }
+
+    /* 4. Checkbox más grande (para dedo gordo) */
+    .pixel-checkbox {
+        width: 35px;       /* Antes 24px */
+        height: 35px;      /* Antes 24px */
+        margin-right: 15px;
+    }
+
+    .pixel-checkbox.checked::after {
+        font-size: 20px;   /* La palomita/tache más grande */
+    }
+
+    /* 5. Ajustar el HUD (Panel de arriba) para que no se amontone */
+    .hud-row {
+        flex-direction: column; /* Poner cosas una abajo de otra */
+        gap: 10px;
+        text-align: center;
+    }
+
+    .progress-bar-container {
+        width: 100%; /* Barra de progreso ocupa todo el ancho */
+        margin: 10px 0;
+    }
+    
+    .player-name, .goal-text {
+        font-size: 16px; /* Nombres un poco más grandes */
+        width: 100%;     /* Que ocupen toda la linea */
+        text-align: center;
+        margin-bottom: 5px;
+    }
+    
+    /* 6. Título NEÓN principal */
+    .neon-title {
+        font-size: 28px; /* Ajustar para que quepa en pantalla vertical */
+        line-height: 1.2;
+    }
+}
