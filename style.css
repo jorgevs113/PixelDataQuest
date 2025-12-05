@@ -1,195 +1,200 @@
-/* Importa la fuente pixelada */
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
-/* Variables para colores neón */
-:root {
-    --neon-blue: #00FFFF;
-    --neon-magenta: #FF00FF;
-    --neon-green: #00FF00;
-    --dark-bg: #111111; /* GRIS OSCURO: Menos contraste que el negro puro */
-    --interface-bg: rgba(17, 17, 17, 0.95); /* Fondo para el contenedor */
-    --light-gray-text: #E0E0E0;
-    --medium-gray-text: #B0B0B0;
-    --font-pixel: 'Press Start 2P', cursive;
-    --font-mono: monospace;
-
-    /* Colores para las fases */
-    --phase1-color: #00FF00; 
-    --phase2-color: #00FFFF; 
-    --phase3-color: #FFFF00; 
-    --phase4-color: #FFA500; 
-    --phase5-color: #FF0000; 
-    --color-off: #333333; /* Color apagado para fases no completadas */
-}
-
-/* Base y Fondo */
-body {
-    font-family: var(--font-pixel);
-    color: var(--neon-green);
-    background-color: var(--dark-bg);
+/* RESET BÁSICO */
+* {
+    box-sizing: border-box;
     margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    overflow-x: hidden; 
-    background-image: radial-gradient(#303030 5%, transparent 5%), radial-gradient(#303030 5%, transparent 5%);
-    background-size: 20px 20px;
-    background-position: 0 0, 10px 10px;
-}
-
-/* Contenedor Principal (Simula la pantalla) */
-.container {
-    display: grid;
-    grid-template-areas: "header header" "main sidebar";
-    grid-template-columns: 3fr 1fr; 
-    gap: 30px;
-    background-color: var(--interface-bg);
-    border: 3px solid var(--neon-blue);
-    box-shadow: 0 0 20px var(--neon-blue), inset 0 0 10px var(--neon-blue);
-    padding: 30px;
-    max-width: 1200px;
-    width: 95%;
-}
-
-/* Tipografía */
-h1 { font-size: 1.5rem; color: var(--neon-magenta); text-shadow: 0 0 5px var(--neon-magenta); }
-h2, h3 { font-size: 1rem; color: var(--neon-blue); margin-top: 15px; }
-.objective-text { font-size: 0.8rem; margin-bottom: 20px; color: var(--light-gray-text); }
-
-/* Ajuste de tipografía para contenido y tareas (arregla el "hoyo negro") */
-p, ul, .module-objective { 
-    font-size: 0.9rem; 
-    font-family: var(--font-mono); 
-    line-height: 1.4; 
-    color: var(--light-gray-text);
-}
-
-/* Barra de Progreso (Común) */
-.bar-bg {
-    height: 12px;
-    background-color: #333;
-    border: 1px solid var(--neon-green);
-    margin: 5px 0;
-}
-.bar-fill {
-    height: 100%;
-    background-color: var(--neon-green);
-    transition: width 0.5s ease-out;
-}
-.module-progress-bar, .yearly-progress-display { margin-bottom: 20px; }
-
-/* Lista de Tareas */
-.tasks-list ul {
-    list-style: none;
     padding: 0;
 }
-.tasks-list li {
-    margin-bottom: 8px;
+
+body {
+    background-color: #101010; /* Negro casi puro */
+    color: #E0E0E0;
+    font-family: 'VT323', monospace; /* Fuente para texto normal */
+    font-size: 20px;
+    padding: 20px;
+}
+
+h1, h2, h3, .player-name, .goal-text {
+    font-family: 'Press Start 2P', cursive; /* Fuente pixelada gruesa */
+    text-transform: uppercase;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.main-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 1. HUD SUPERIOR */
+.hud-panel {
+    border: 4px solid #FFF;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #000;
+}
+
+.hud-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.player-name { color: #00FF00; font-size: 12px; line-height: 1.5; }
+.goal-text { color: #FFFF00; font-size: 12px; }
+.deadline-text { color: #FF0055; font-size: 18px; }
+
+/* BARRAS DE PROGRESO */
+.progress-bar-container {
+    flex-grow: 1;
+    height: 25px;
+    background-color: #333;
+    border: 2px solid #FFF;
+    margin: 0 15px;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(0,0,0,0.2) 10px,
+        rgba(0,0,0,0.2) 20px
+    );
+}
+
+.gold-fill { background-color: #FFD700; }
+.level-fill { background-color: #00FF00; } /* Se cambia dinámicamente */
+
+/* 2. BADGES / TROFEOS */
+.badges-panel {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    background: #222;
+    border: 2px solid #555;
+    padding: 10px;
+    font-family: 'Press Start 2P';
+    font-size: 10px;
+    color: #555; /* Apagado */
+    text-align: center;
+    width: 100px;
+}
+
+.badge.unlocked {
+    border-color: #FFD700;
+    color: #FFF;
+    background: #333;
+    box-shadow: 0 0 10px #FFD700;
+    animation: bounce 0.5s;
+}
+
+@keyframes bounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* 3. TARJETAS DE NIVEL */
+.phase-card {
+    border: 4px solid #444;
+    background-color: #1a1a1a;
+    margin-bottom: 30px;
+    padding: 15px;
+    position: relative;
+}
+
+.phase-header {
+    margin-bottom: 15px;
+    border-bottom: 2px dashed #444;
+    padding-bottom: 10px;
+}
+
+.phase-title {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #FFF;
+}
+
+.phase-deadline {
+    font-size: 18px;
+    color: #FF5555;
+}
+
+/* Estilos de Tareas */
+.task-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 8px;
+    margin-bottom: 5px;
+    border: 1px solid transparent;
     cursor: pointer;
+}
+
+.task-item:hover {
+    background-color: #222;
+    border: 1px solid #555;
+}
+
+.pixel-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #FFF;
+    margin-right: 10px;
     display: flex;
     align-items: center;
-    color: var(--light-gray-text);
-}
-.tasks-list li.completed {
-    text-decoration: line-through;
-    color: var(--medium-gray-text);
+    justify-content: center;
+    flex-shrink: 0;
 }
 
-/* Checkbox retro simple */
-.task-checkbox {
-    width: 15px;
-    height: 15px;
-    margin-right: 10px;
-    border: 1px solid var(--neon-green);
-    background-color: transparent;
-    cursor: pointer;
-    display: inline-block;
-}
-.tasks-list li.completed .task-checkbox {
-    background-color: var(--neon-green);
-    box-shadow: 0 0 5px var(--neon-green);
+.pixel-checkbox.checked::after {
+    content: 'X';
+    font-family: 'Press Start 2P';
+    font-size: 12px;
+    color: #00FF00;
 }
 
-/* Contador Circular */
-.countdown-container {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    margin: 20px auto;
+.task-content h4 {
+    font-size: 22px;
+    margin-bottom: 2px;
 }
-#circular-countdown {
-    transform: rotate(-90deg);
+
+.task-content p {
+    font-size: 16px;
+    color: #888;
 }
-.base-circle {
-    fill: none;
-    stroke: rgba(0, 255, 255, 0.2);
-    stroke-width: 5;
+
+/* ESTADO: COMPLETADO (MISSION COMPLETE) */
+.phase-card.completed {
+    border-color: #444 !important;
+    opacity: 0.6;
+    filter: grayscale(100%);
+    pointer-events: none; /* No se puede clicar */
 }
-.progress-circle {
-    fill: none;
-    stroke: var(--neon-magenta);
-    stroke-width: 5;
-    stroke-linecap: round;
-    transition: stroke-dashoffset 0.5s ease-out;
-}
-.time-display {
+
+.mission-complete-stamp {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: var(--neon-blue);
+    transform: translate(-50%, -50%) rotate(-10deg);
+    border: 5px double #00FF00;
+    padding: 10px 20px;
+    font-family: 'Press Start 2P';
+    color: #00FF00;
+    font-size: 20px;
+    background: rgba(0,0,0,0.8);
+    z-index: 10;
+    display: none; /* Oculto por defecto */
 }
-#days-left { font-size: 2rem; }
-#hms-left { font-size: 1.2rem; }
 
-/* Estilos de las Fases en el Sidebar (Radar de Misión) */
-#phases-list li {
-    font-family: var(--font-mono);
-    margin-bottom: 15px; 
-    color: var(--medium-gray-text);
-}
-#phases-list .phase-title-line {
-    font-family: var(--font-pixel);
-    font-size: 0.9rem;
-    margin-bottom: 3px;
+.phase-card.completed .mission-complete-stamp {
     display: block;
-}
-#phases-list .phase-objective-line {
-    font-size: 0.7rem;
-    color: var(--medium-gray-text);
-    display: block;
-    margin-bottom: 5px;
-}
-#phases-list .phase-title-line.completed-phase {
-    color: var(--neon-green);
-    text-shadow: 0 0 5px var(--neon-green);
-}
-
-
-/* --- RESPONSIVIDAD: VISTA MÓVIL (ARREGLO DEL AMONTONAMIENTO) --- */
-@media (max-width: 768px) {
-    .container {
-        /* Se apilan verticalmente */
-        grid-template-areas: "header" "main" "sidebar";
-        grid-template-columns: 1fr;
-        padding: 15px;
-    }
-    
-    .game-header {
-        text-align: center;
-    }
-    .countdown-container {
-        width: 150px;
-        height: 150px;
-    }
-    
-    /* El panel lateral se empuja hacia abajo sin amontonarse */
-    .sidebar {
-        margin-top: 20px;
-        border-top: 2px solid var(--neon-blue);
-        padding-top: 20px;
-    }
 }
