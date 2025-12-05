@@ -4,75 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pixel Data Quest</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        
-        <header class="game-header">
-            <h1>PIXEL DATA QUEST</h1>
-            <p class="objective-text">OBJETIVO: SER ANALISTA DE DATOS FUNCIONAL Y RENTABLE PARA DIC 2026</p>
-        </header>
 
-        <main class="main-screen">
-            <div class="current-module-display">
-                <p class="phase-title" id="current-phase-title"></p>
-                <h2 class="module-title" id="current-module-title"></h2>
-                <p class="module-objective" id="current-module-objective"></p>
-                
-                <div class="countdown-container">
-                    <svg id="circular-countdown" viewBox="0 0 100 100">
-                        <circle class="base-circle" cx="50" cy="50" r="45"></circle>
-                        <circle class="progress-circle" cx="50" cy="50" r="45"></circle>
-                    </svg>
-                    <div class="time-display">
-                        <span class="days-left" id="days-left">-- DÍAS</span><br>
-                        <span class="hours-minutes-seconds-left" id="hms-left">--:--:--</span>
-                    </div>
-                </div>
-
-                <div class="module-progress-bar">
-                    <span class="progress-label">PROGRESO MENSUAL:</span>
-                    <div class="bar-bg">
-                        <div class="bar-fill" id="monthly-bar-fill"></div>
-                    </div>
-                    <span class="progress-percentage" id="monthly-percentage">0%</span>
-                </div>
-
-                <div class="tasks-list">
-                    <h3>MICROTASKS / CHECKLIST:</h3>
-                    <ul id="current-tasks">
-                        </ul>
-                    <div class="expected-outcome">
-                        <h3>💡 RESULTADO ESPERADO:</h3>
-                        <p id="outcome-text"></p>
-                    </div>
-                </div>
+    <div class="main-container">
+        <div class="hud-panel">
+            <div class="hud-row top-row">
+                <span class="player-name">👾 PLAYER: JORGE</span>
+                <span class="goal-text">🎯 OBJ: DATA ANALYST</span>
             </div>
-        </main>
-
-        <aside class="sidebar">
-            <div class="yearly-progress-display">
-                <p class="progress-label">PROGRESO ANUAL:</p>
-                <div class="bar-bg">
-                    <div class="bar-fill" id="yearly-bar-fill"></div>
+            
+            <div class="hud-row progress-row">
+                <label>XP TOTAL:</label>
+                <div class="progress-bar-container global-bar-bg">
+                    <div id="global-progress" class="progress-fill gold-fill" style="width: 0%;"></div>
                 </div>
-                <span class="progress-percentage" id="yearly-percentage">0%</span>
+                <span id="global-percent">0%</span>
             </div>
 
-            <div class="phases-summary">
-                <h3>FASES DE LA MISIÓN:</h3>
-                <ul id="phases-list">
-                    </ul>
+            <div class="hud-row bottom-row">
+                <span class="deadline-text">⏳ DEADLINE FINAL: 31 ENE 2027</span>
             </div>
-        </aside>
+        </div>
+
+        <div class="badges-panel" id="badges-container">
+            </div>
+
+        <div id="phases-container" class="phases-wrapper">
+            <p style="text-align:center; color:#666;">Cargando Misiones...</p>
+            </div>
     </div>
 
-    <script src="script.js"></script> 
+    <script type="module" src="script.js"></script>
 </body>
 </html>
