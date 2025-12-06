@@ -2,207 +2,169 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    background-color: #050011; /* Negro violeta profundo */
+    background-color: #050011; 
+    /* Degradado de fondo */
+    background: linear-gradient(to bottom, #1a0b2e 0%, #000000 100%);
     color: #E0E0E0;
     font-family: 'VT323', monospace;
-    font-size: 22px; /* Tamaño PC */
+    font-size: 22px;
     padding: 20px;
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
 }
 
-/* === EL FONDO PLANO (INTERLINEADO VIOLETA) === */
+/* REJILLA PLANA */
 .retro-background {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1;
-    /* Un degradado sutil de arriba a abajo */
-    background: linear-gradient(to bottom, #1a0b2e 0%, #000000 100%);
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
 }
-
 .synthwave-grid {
-    position: absolute;
-    width: 100%; height: 100%;
-    left: 0; top: 0;
-    
-    /* REJILLA PLANA (SIN 3D) */
+    position: absolute; width: 100%; height: 100%; left: 0; top: 0;
     background-image: 
         linear-gradient(rgba(157, 78, 221, 0.15) 1px, transparent 1px),
         linear-gradient(90deg, rgba(157, 78, 221, 0.15) 1px, transparent 1px);
-        
-    background-size: 40px 40px; /* Cuadros de buen tamaño */
-    
-    /* Sin movimiento, sin rotación */
+    background-size: 40px 40px;
 }
-
-/* === EFECTO TV (SCANLINES) === */
 .scanlines {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: repeating-linear-gradient(
-        to bottom,
-        transparent 0px,
-        transparent 2px,
-        rgba(0,0,0,0.2) 3px
-    );
-    pointer-events: none;
-    z-index: 999;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.2) 3px);
+    pointer-events: none; z-index: 999;
 }
 
-/* --- ESTILOS DE TEXTO --- */
-h1, h2, h3, .player-name, .goal-text, .badge {
+/* TEXTOS */
+h1, h2, h3, .player-name, .goal-text, .badge, .status-badge {
     font-family: 'Press Start 2P', cursive;
     text-transform: uppercase;
 }
 
 /* LOGO */
 .header-logo-area { text-align: center; margin-bottom: 20px; }
+.game-logo { max-width: 500px; width: 90%; filter: drop-shadow(0 0 15px rgba(189, 0, 255, 0.6)); }
 
-.game-logo {
-    max-width: 500px; width: 90%;
-    filter: drop-shadow(0 0 15px rgba(189, 0, 255, 0.6));
-}
+/* CONTENEDOR */
+.main-container { max-width: 800px; margin: 0 auto; position: relative; z-index: 10; }
 
-/* --- CONTENEDORES --- */
-.main-container {
-    max-width: 800px; margin: 0 auto;
-    position: relative; z-index: 10;
-}
-
-/* Paneles */
+/* PANELES */
 .glass-panel, .phase-card {
     background: rgba(10, 5, 20, 0.9); 
     border: 2px solid rgba(157, 78, 221, 0.5);
     box-shadow: 0 0 15px rgba(157, 78, 221, 0.2);
 }
 
-/* HUD Superior */
+/* HUD */
 .hud-panel { padding: 20px; margin-bottom: 30px; border-color: #e0aaff; }
-
-.hud-row {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 15px; flex-wrap: wrap;
-}
-
+.hud-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; }
 .player-name { color: #e0aaff; text-shadow: 0 0 5px #e0aaff; font-size: 14px; }
 .goal-text { color: #ff9e00; text-shadow: 0 0 5px #ff9e00; font-size: 14px; }
 .deadline-text { color: #ff0054; text-shadow: 0 0 10px #ff0054; font-size: 18px; }
 
-/* Barras */
+/* BARRAS DE PROGRESO ANIMADAS */
 .progress-bar-container {
-    flex-grow: 1; height: 30px;
-    background: #10002b; border: 2px solid #5a189a;
+    flex-grow: 1; height: 30px; background: #10002b; border: 2px solid #5a189a;
     margin: 0 15px; position: relative; overflow: hidden;
 }
-.progress-fill { height: 100%; transition: width 0.8s ease; }
-.gold-fill { background: linear-gradient(90deg, #ff9e00, #ffea00); box-shadow: 0 0 15px #ff9e00; }
-
-/* Badges */
-.badges-panel {
-    display: flex; justify-content: center; gap: 15px;
-    margin-bottom: 30px; flex-wrap: wrap;
+.progress-fill {
+    height: 100%;
+    transition: width 0.8s ease;
+    /* Efecto de Rayas */
+    background-image: linear-gradient(
+        45deg, 
+        rgba(255, 255, 255, 0.15) 25%, 
+        transparent 25%, 
+        transparent 50%, 
+        rgba(255, 255, 255, 0.15) 50%, 
+        rgba(255, 255, 255, 0.15) 75%, 
+        transparent 75%, 
+        transparent
+    );
+    background-size: 40px 40px;
+    animation: moveStripes 2s linear infinite; /* Animación activada */
 }
+
+@keyframes moveStripes {
+    0% { background-position: 0 0; }
+    100% { background-position: 40px 0; }
+}
+
+.gold-fill { background-color: #ff9e00; box-shadow: 0 0 15px #ff9e00; }
+
+/* BADGES */
+.badges-panel { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
 .badge {
     background: rgba(0,0,0,0.5); border: 2px solid #3c096c;
     width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;
     text-align: center; font-size: 10px; color: #9d4edd; border-radius: 8px;
 }
 .badge.unlocked {
-    border-color: #e0aaff; color: #fff;
-    background: rgba(224, 170, 255, 0.2);
+    border-color: #e0aaff; color: #fff; background: rgba(224, 170, 255, 0.2);
     box-shadow: 0 0 15px #e0aaff; transform: scale(1.1);
 }
 
-/* Tarjetas */
-.phase-card { margin-bottom: 40px; padding: 20px; }
+/* TARJETAS DE NIVEL */
+.phase-card { margin-bottom: 40px; padding: 20px; position: relative; }
 .phase-header { border-bottom: 2px dashed #5a189a; margin-bottom: 15px; padding-bottom: 10px; }
 .phase-title { font-size: 18px; margin-bottom: 10px; color: #fff; }
 
-/* Tareas */
+/* Fechas e Indicador Activo */
+.date-row { display: flex; justify-content: space-between; align-items: center; width: 100%; font-size: 16px; margin-bottom: 5px; }
+.status-badge {
+    font-size: 12px; padding: 5px 10px; border-radius: 4px; display: inline-block; margin-left: 10px;
+    animation: blinkBadge 1.5s infinite;
+}
+.active-phase-badge { background: #00FF00; color: #000; box-shadow: 0 0 10px #00FF00; }
+
+@keyframes blinkBadge {
+    0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; }
+}
+
+/* TAREAS */
 .task-item {
-    display: flex; align-items: flex-start;
-    padding: 12px; margin-bottom: 8px;
-    background: rgba(255,255,255,0.05);
-    cursor: pointer; border: 1px solid transparent;
+    display: flex; align-items: flex-start; padding: 12px; margin-bottom: 8px;
+    background: rgba(255,255,255,0.05); cursor: pointer; border: 1px solid transparent; transition: 0.2s;
 }
 .task-item:hover { background: rgba(157, 78, 221, 0.3); border-color: #e0aaff; }
 
 .pixel-checkbox {
-    width: 24px; height: 24px; border: 2px solid #9d4edd;
-    margin-right: 15px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px; border: 2px solid #9d4edd; margin-right: 15px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
 }
 .pixel-checkbox.checked { background: #00ff00; border-color: #00ff00; box-shadow: 0 0 10px #00ff00; }
 .pixel-checkbox.checked::after { content: '✔'; color: #000; font-size: 14px; }
 
-.task-content h4 { font-size: 20px; margin-bottom: 5px; color: #e0aaff; }
-.task-content p { font-size: 16px; color: #e0aaff; font-family: sans-serif; opacity: 0.8; }
+.task-content h4 { font-size: 20px; margin-bottom: 5px; color: #e0aaff; transition: 0.3s; }
+.task-content p { font-size: 16px; color: #e0aaff; font-family: sans-serif; opacity: 0.8; transition: 0.3s; }
 
-/* Completado */
+/* ESTADO COMPLETADO (TAREA INDIVIDUAL) */
+.task-item.done-task .task-content h4 {
+    text-decoration: line-through; color: #555;
+}
+.task-item.done-task .task-content p {
+    text-decoration: line-through; opacity: 0.3; color: #555;
+}
+
+/* COMPLETADO (FASE ENTERA) */
 .phase-card.completed { opacity: 0.5; filter: grayscale(80%); border-color: #333 !important; }
 .mission-complete-stamp {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%) rotate(-10deg);
-    border: 4px solid #00ff00; padding: 10px 20px;
-    font-family: 'Press Start 2P'; color: #00ff00;
-    background: #000; z-index: 20; display: none;
-    box-shadow: 0 0 20px #00ff00; text-align: center;
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-10deg);
+    border: 4px solid #00ff00; padding: 10px 20px; font-family: 'Press Start 2P'; color: #00ff00;
+    background: #000; z-index: 20; display: none; box-shadow: 0 0 20px #00ff00; text-align: center;
 }
 .phase-card.completed .mission-complete-stamp { display: block; }
 
-/* =========================================
-   MODO CELULAR (TAMAÑOS AUMENTADOS)
-   ========================================= */
+/* CELULAR */
 @media (max-width: 768px) {
-    /* 1. Letra base MUCHO más grande */
-    body { 
-        font-size: 26px !important; /* Forzamos el tamaño */
-    }
-    
+    body { font-size: 26px !important; }
     .game-logo { width: 100%; }
-
-    /* 2. Títulos de Nivel */
-    .phase-title { 
-        font-size: 30px !important; 
-        text-align: center; 
-        margin-bottom: 20px;
-    }
-
-    /* 3. Contenedor de tarea más amplio */
-    .task-item { 
-        padding: 20px 15px; 
-        margin-bottom: 15px;
-    }
-
-    /* 4. Título de Tarea */
-    .task-content h4 { 
-        font-size: 32px !important; 
-        margin-bottom: 10px; 
-        line-height: 1.2;
-    }
-
-    /* 5. Descripción de Tarea */
-    .task-content p { 
-        font-size: 24px !important; 
-        line-height: 1.4; 
-        color: #d0d0d0; /* Un poco más claro para leer mejor */
-    }
-
-    /* 6. Checkbox gigante para dedo */
-    .pixel-checkbox { 
-        width: 45px; 
-        height: 45px; 
-        margin-right: 20px; 
-        border-width: 3px;
-    }
+    .phase-title { font-size: 30px !important; text-align: center; margin-bottom: 20px; }
+    .task-item { padding: 20px 15px; margin-bottom: 15px; }
+    .task-content h4 { font-size: 32px !important; margin-bottom: 10px; line-height: 1.2; }
+    .task-content p { font-size: 24px !important; line-height: 1.4; color: #d0d0d0; }
+    .pixel-checkbox { width: 45px; height: 45px; margin-right: 20px; border-width: 3px; }
     .pixel-checkbox.checked::after { font-size: 30px; }
-
-    /* 7. HUD Ajustado */
     .hud-row { flex-direction: column; gap: 15px; text-align: center; }
-    .progress-bar-container { width: 100%; height: 50px; } /* Barra más gorda */
+    .progress-bar-container { width: 100%; height: 50px; }
     .player-name, .goal-text { font-size: 22px; width: 100%; }
     .deadline-text { font-size: 24px; color: #ff3333; }
-    
-    /* 8. Fondo: rejilla un poco más grande en celular */
-    .synthwave-grid { background-size: 50px 50px; }
+    /* Ajuste para fechas en cel */
+    .date-row { flex-direction: column; gap: 5px; font-size: 20px; }
 }
