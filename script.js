@@ -5,7 +5,6 @@ import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/fireb
 // ⚠️ PEGA AQUÍ TU CONFIGURACIÓN DE FIREBASE
 // --------------------------------------------------------
 const firebaseConfig = {
-  const firebaseConfig = {
   apiKey: "AIzaSyAsc6sCTXDevRtwd-wa9uEksHng2syt9f0",
   authDomain: "pixeldataquest-jorge.firebaseapp.com",
   databaseURL: "https://pixeldataquest-jorge-default-rtdb.firebaseio.com",
@@ -158,3 +157,4 @@ window.toggleTask = function(phaseId, taskId, currentStatus) {
     updates[`phases/${phaseId}/tasks/${taskId}/done`] = !currentStatus;
     update(ref(db), updates);
 };
+
