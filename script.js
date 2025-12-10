@@ -5,14 +5,7 @@ import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/fireb
 // ⚠️ PEGA AQUÍ TU CONFIGURACIÓN DE FIREBASE
 // --------------------------------------------------------
 const firebaseConfig = {
-  // const firebaseConfig = {
-  apiKey: "AIzaSyAsc6sCTXDevRtwd-wa9uEksHng2syt9f0",
-  authDomain: "pixeldataquest-jorge.firebaseapp.com",
-  databaseURL: "https://pixeldataquest-jorge-default-rtdb.firebaseio.com",
-  projectId: "pixeldataquest-jorge",
-  storageBucket: "pixeldataquest-jorge.firebasestorage.app",
-  messagingSenderId: "1017478767394",
-  appId: "1:1017478767394:web:b9ecb4c50484e596757b7b"
+  // ... TU CONFIG AQUI ...
 };
 // --------------------------------------------------------
 
@@ -60,7 +53,6 @@ function renderApp(phases) {
         completedTasksGlobal += completedCount;
     });
 
-    // Ordenar: Activas arriba, completadas abajo
     const activePhases = phases.filter(p => !p.isCompleted).sort((a, b) => a.id - b.id);
     const completedPhases = phases.filter(p => p.isCompleted).sort((a, b) => a.id - b.id);
     const sortedPhases = [...activePhases, ...completedPhases];
@@ -81,6 +73,7 @@ function renderApp(phases) {
         if (phase.isCompleted) card.classList.add('completed');
         card.style.borderColor = phase.color;
 
+        // SECCION DE META, SOFTWARE Y CURSOS
         card.innerHTML = `
             <div class="mission-complete-stamp">★ NIVEL COMPLETADO ★</div>
             
@@ -113,6 +106,7 @@ function renderApp(phases) {
         let currentMonth = "";
 
         phase.tasks.forEach((task) => {
+            // SEPARADOR DE MESES
             if (task.month !== currentMonth) {
                 const monthHeader = document.createElement('div');
                 monthHeader.classList.add('month-separator');
@@ -129,12 +123,13 @@ function renderApp(phases) {
             
             taskItem.onclick = () => toggleTask(phase.id, task.id, task.done);
 
+            // AQUI SEPARAN INSTRUCCION Y OBJETIVO
             taskItem.innerHTML = `
                 <div class="pixel-checkbox ${task.done ? 'checked' : ''}"></div>
                 <div class="task-content">
                     <h4>${task.title}</h4>
                     <div class="task-details">
-                        <p class="task-instruction"><strong>🎮 Instrucción:</strong> ${task.instruction}</p>
+                        <p class="task-instruction"><strong>🎮 Acción:</strong> ${task.instruction}</p>
                         <p class="task-objective"><strong>💡 Objetivo:</strong> ${task.objective}</p>
                     </div>
                 </div>
