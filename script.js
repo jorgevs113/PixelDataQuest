@@ -5,6 +5,7 @@ import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/fireb
 // ⚠️ PEGA AQUÍ TU CONFIGURACIÓN DE FIREBASE
 // --------------------------------------------------------
 const firebaseConfig = {
+  // const firebaseConfig = {
   apiKey: "AIzaSyAsc6sCTXDevRtwd-wa9uEksHng2syt9f0",
   authDomain: "pixeldataquest-jorge.firebaseapp.com",
   databaseURL: "https://pixeldataquest-jorge-default-rtdb.firebaseio.com",
@@ -31,25 +32,16 @@ onValue(dbRef, (snapshot) => {
         let phasesArray = Object.values(data);
         renderApp(phasesArray);
     } else {
-        phasesContainer.innerHTML = "<p style='text-align:center; color:white;'>Conectando al servidor...</p>";
+        phasesContainer.innerHTML = "<p style='text-align:center; color:white;'>Cargando datos...</p>";
     }
 });
 
-function formatDate(dateString) {
-    // Convierte 2026-01-01 a texto bonito si quieres, o déjalo así.
-    // Por simpleza, usaremos el string directo, pero se puede mejorar.
-    return dateString; 
-}
-
-// Función para saber si la fecha actual está dentro del rango
 function checkIfActive(start, end) {
     const today = new Date();
     const startDate = new Date(start);
     const endDate = new Date(end);
-    // Ajustamos horas para evitar errores de zona horaria simples
     startDate.setHours(0,0,0,0);
     endDate.setHours(23,59,59,999);
-    
     return today >= startDate && today <= endDate;
 }
 
@@ -68,6 +60,7 @@ function renderApp(phases) {
         completedTasksGlobal += completedCount;
     });
 
+    // Ordenar: Activas arriba, completadas abajo
     const activePhases = phases.filter(p => !p.isCompleted).sort((a, b) => a.id - b.id);
     const completedPhases = phases.filter(p => p.isCompleted).sort((a, b) => a.id - b.id);
     const sortedPhases = [...activePhases, ...completedPhases];
@@ -77,7 +70,6 @@ function renderApp(phases) {
         const phaseTotalTasks = phase.tasks.length;
         const phasePercent = phaseTotalTasks === 0 ? 0 : Math.round((phaseCompletedTasks / phaseTotalTasks) * 100);
 
-        // Verificar si está ACTIVA (en curso)
         const isActive = checkIfActive(phase.startDate, phase.deadline);
         let activeBadgeHTML = "";
         if (isActive && !phase.isCompleted) {
@@ -90,20 +82,25 @@ function renderApp(phases) {
         card.style.borderColor = phase.color;
 
         card.innerHTML = `
-            <div class="mission-complete-stamp">★ MISSION COMPLETE ★</div>
+            <div class="mission-complete-stamp">★ NIVEL COMPLETADO ★</div>
             
             <div class="phase-header">
                 <h3 class="phase-title" style="color:${phase.color}">
                     ${phase.name} ${activeBadgeHTML}
                 </h3>
                 
-                <div class="date-row" style="color: #aaa; font-size: 14px; margin-bottom: 10px;">
-                    <span>🚀 Inicio: ${phase.startDate}</span>
-                    <span style="color:${phase.color}">${phasePercent}%</span>
-                    <span style="color:#ff5555">🏁 Fin: ${phase.deadline}</span>
+                <div class="level-meta-box">
+                    <p><strong>🎯 META:</strong> ${phase.goal}</p>
+                    <p><strong>💻 SOFTWARE:</strong> ${phase.software}</p>
+                    <p><strong>🎓 CURSOS:</strong> ${phase.resources}</p>
                 </div>
 
-                <div class="progress-bar-container" style="margin:0; height:15px; border-width:1px;">
+                <div class="date-row">
+                    <span>📅 ${phase.startDate} - ${phase.deadline}</span>
+                    <span style="color:${phase.color}">${phasePercent}%</span>
+                </div>
+
+                <div class="progress-bar-container" style="margin:10px 0; height:15px; border-width:1px;">
                     <div class="progress-fill" style="width: ${phasePercent}%; background-color: ${phase.color}"></div>
                 </div>
             </div>
@@ -113,14 +110,22 @@ function renderApp(phases) {
 
         const taskListContainer = card.querySelector('.tasks-list');
         
+        let currentMonth = "";
+
         phase.tasks.forEach((task) => {
+            if (task.month !== currentMonth) {
+                const monthHeader = document.createElement('div');
+                monthHeader.classList.add('month-separator');
+                monthHeader.innerText = task.month;
+                monthHeader.style.color = phase.color;
+                monthHeader.style.borderColor = phase.color;
+                taskListContainer.appendChild(monthHeader);
+                currentMonth = task.month;
+            }
+
             const taskItem = document.createElement('div');
             taskItem.classList.add('task-item');
-            
-            // Si está hecha, agregamos clase para apagar el texto
-            if (task.done) {
-                taskItem.classList.add('done-task');
-            }
+            if (task.done) taskItem.classList.add('done-task');
             
             taskItem.onclick = () => toggleTask(phase.id, task.id, task.done);
 
@@ -128,7 +133,10 @@ function renderApp(phases) {
                 <div class="pixel-checkbox ${task.done ? 'checked' : ''}"></div>
                 <div class="task-content">
                     <h4>${task.title}</h4>
-                    <p>${task.desc}</p>
+                    <div class="task-details">
+                        <p class="task-instruction"><strong>🎮 Instrucción:</strong> ${task.instruction}</p>
+                        <p class="task-objective"><strong>💡 Objetivo:</strong> ${task.objective}</p>
+                    </div>
                 </div>
             `;
             taskListContainer.appendChild(taskItem);
@@ -157,4 +165,3 @@ window.toggleTask = function(phaseId, taskId, currentStatus) {
     updates[`phases/${phaseId}/tasks/${taskId}/done`] = !currentStatus;
     update(ref(db), updates);
 };
-
