@@ -5,7 +5,7 @@ import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/fireb
 // ⚠️ PEGA AQUÍ TU CONFIGURACIÓN DE FIREBASE
 // --------------------------------------------------------
 const firebaseConfig = {
-  const firebaseConfig = {
+    const firebaseConfig = {
   apiKey: "AIzaSyAsc6sCTXDevRtwd-wa9uEksHng2syt9f0",
   authDomain: "pixeldataquest-jorge.firebaseapp.com",
   databaseURL: "https://pixeldataquest-jorge-default-rtdb.firebaseio.com",
@@ -61,6 +61,7 @@ function renderApp(phases) {
         completedTasksGlobal += completedCount;
     });
 
+    // Ordenar
     const activePhases = phases.filter(p => !p.isCompleted).sort((a, b) => a.id - b.id);
     const completedPhases = phases.filter(p => p.isCompleted).sort((a, b) => a.id - b.id);
     const sortedPhases = [...activePhases, ...completedPhases];
@@ -78,10 +79,13 @@ function renderApp(phases) {
 
         const card = document.createElement('div');
         card.classList.add('phase-card');
+        
+        // AGREGAMOS ID PARA NAVEGACIÓN
+        card.id = `phase-${phase.id}`; 
+        
         if (phase.isCompleted) card.classList.add('completed');
         card.style.borderColor = phase.color;
 
-        // SECCION DE META, SOFTWARE Y CURSOS
         card.innerHTML = `
             <div class="mission-complete-stamp">★ NIVEL COMPLETADO ★</div>
             
@@ -110,11 +114,9 @@ function renderApp(phases) {
         `;
 
         const taskListContainer = card.querySelector('.tasks-list');
-        
         let currentMonth = "";
 
         phase.tasks.forEach((task) => {
-            // SEPARADOR DE MESES
             if (task.month !== currentMonth) {
                 const monthHeader = document.createElement('div');
                 monthHeader.classList.add('month-separator');
@@ -131,7 +133,6 @@ function renderApp(phases) {
             
             taskItem.onclick = () => toggleTask(phase.id, task.id, task.done);
 
-            // AQUI SEPARAN INSTRUCCION Y OBJETIVO
             taskItem.innerHTML = `
                 <div class="pixel-checkbox ${task.done ? 'checked' : ''}"></div>
                 <div class="task-content">
@@ -148,14 +149,29 @@ function renderApp(phases) {
         phasesContainer.appendChild(card);
     });
 
-    // BADGES
+    // BADGES (TROFEOS) CON NAVEGACIÓN E IMÁGENES
     const numericPhases = [...phases].sort((a, b) => a.id - b.id);
     numericPhases.forEach(phase => {
+        // Creamos un link para que al hacer clic baje a la tarjeta
+        const anchor = document.createElement('a');
+        anchor.href = `#phase-${phase.id}`; // Apunta al ID de la tarjeta
+        anchor.classList.add('badge-link');
+
         const badge = document.createElement('div');
         badge.classList.add('badge');
         if (phase.isCompleted) badge.classList.add('unlocked');
-        badge.innerText = phase.badge;
-        badgesContainer.appendChild(badge);
+        
+        // AHORA USA IMÁGENES
+        badge.innerHTML = `<img src="${phase.badge}" alt="Badge" class="badge-img">`;
+        
+        // Si está completado, borde brillante del color de la fase
+        if (phase.isCompleted) {
+            badge.style.borderColor = phase.color;
+            badge.style.boxShadow = `0 0 15px ${phase.color}`;
+        }
+
+        anchor.appendChild(badge);
+        badgesContainer.appendChild(anchor);
     });
 
     const globalPercent = totalTasks === 0 ? 0 : Math.round((completedTasksGlobal / totalTasks) * 100);
@@ -168,4 +184,3 @@ window.toggleTask = function(phaseId, taskId, currentStatus) {
     updates[`phases/${phaseId}/tasks/${taskId}/done`] = !currentStatus;
     update(ref(db), updates);
 };
-
