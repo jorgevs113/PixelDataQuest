@@ -184,31 +184,70 @@ h1, h2, h3, .player-name, .goal-text, .badge, .status-badge, .month-separator {
 }
 .phase-card.completed .mission-complete-stamp { display: block; }
 
-/* CELULAR */
+/* =========================================
+   MODO CELULAR (AJUSTADO Y ELEGANTE)
+   ========================================= */
 @media (max-width: 768px) {
-    body { font-size: 26px !important; }
-    .game-logo { width: 100%; }
-    .phase-title { font-size: 30px !important; text-align: center; margin-bottom: 20px; }
+    /* 1. Letra base más controlada */
+    body { 
+        font-size: 16px !important; /* Antes era 26px, muy grande */
+    }
     
-    .level-meta-box { font-size: 22px; padding: 20px; }
-    .month-separator { font-size: 26px; margin-top: 40px; }
+    .game-logo { width: 90%; margin-bottom: 10px; }
 
-    .task-item { padding: 25px 15px; margin-bottom: 20px; }
-    .task-content h4 { font-size: 32px !important; margin-bottom: 15px; line-height: 1.2; }
+    /* 2. Títulos de Nivel */
+    .phase-title { 
+        font-size: 20px !important; 
+        text-align: center; 
+        margin-bottom: 15px;
+        line-height: 1.3;
+    }
+
+    /* 3. Contenedor de tarea más compacto */
+    .task-item { 
+        padding: 15px 10px; 
+        margin-bottom: 10px;
+    }
+
+    /* 4. Título de Tarea */
+    .task-content h4 { 
+        font-size: 18px !important; 
+        margin-bottom: 5px; 
+        line-height: 1.2;
+    }
+
+    /* 5. Descripción e Instrucciones */
+    .task-details p { 
+        font-size: 14px !important; /* Texto legible sin ocupar toda la pantalla */
+        line-height: 1.4; 
+        margin-bottom: 8px; 
+    }
+
+    /* 6. Checkbox tamaño dedo (pero no gigante) */
+    .pixel-checkbox { 
+        width: 35px; 
+        height: 35px; 
+        margin-right: 15px; 
+        border-width: 2px;
+    }
+    .pixel-checkbox.checked::after { font-size: 20px; }
+
+    /* 7. HUD y Barras */
+    .hud-row { flex-direction: column; gap: 10px; text-align: center; }
     
-    .task-details p { font-size: 24px !important; line-height: 1.5; margin-bottom: 15px; }
+    .progress-bar-container { 
+        width: 100%; 
+        height: 25px; /* Barra más delgada */
+        margin: 5px 0;
+    }
     
-    .pixel-checkbox { width: 50px; height: 50px; margin-right: 25px; border-width: 4px; }
-    .pixel-checkbox.checked::after { font-size: 35px; }
+    .player-name, .goal-text { font-size: 14px; width: 100%; }
+    .deadline-text { font-size: 16px; color: #ff3333; }
     
-    .hud-row { flex-direction: column; gap: 15px; text-align: center; }
-    .progress-bar-container { width: 100%; height: 50px; }
-    .player-name, .goal-text { font-size: 22px; width: 100%; }
-    .deadline-text { font-size: 26px; color: #ff3333; }
-    .date-row { flex-direction: column; gap: 5px; font-size: 22px; }
+    /* 8. Ajuste de Badges para que quepan en pantalla */
+    .badges-panel { gap: 10px; }
+    .badge { width: 60px; height: 60px; } /* Iconos más pequeños */
+    
+    .level-meta-box { font-size: 14px; padding: 15px; }
+    .month-separator { font-size: 18px; margin-top: 25px; }
 }
-
-
-
-
-
