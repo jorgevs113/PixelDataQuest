@@ -54,17 +54,27 @@ h1, h2, h3, .player-name, .goal-text, .badge, .status-badge, .month-separator {
 .goal-text { color: #ff9e00; text-shadow: 0 0 5px #ff9e00; font-size: 14px; }
 .deadline-text { color: #ff0054; text-shadow: 0 0 10px #ff0054; font-size: 18px; }
 
-/* BARRAS DE PROGRESO (CON TRANSICIÓN) */
+/* BARRAS DE PROGRESO ANIMADAS */
 .progress-bar-container {
-    flex-grow: 1; height: 30px; background: #10002b; border: 2px solid #5a189a;
-    margin: 0 15px; position: relative; overflow: hidden;
+    flex-grow: 1; 
+    height: 30px; 
+    background: #10002b; 
+    border: 2px solid #5a189a;
+    margin: 0 15px; 
+    position: relative; 
+    overflow: hidden;
 }
+
 .progress-fill {
     height: 100%; 
-    transition: width 1s ease-out; /* MOVIMIENTO SUAVE */
+    width: 0%; /* Empieza en 0 */
+    /* ESTA ES LA MAGIA: Transition controla la velocidad del deslizamiento */
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); 
+    
     background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
     background-size: 40px 40px;
     animation: moveStripes 2s linear infinite;
+}
 }
 @keyframes moveStripes { 0% { background-position: 0 0; } 100% { background-position: 40px 0; } }
 .gold-fill { background-color: #ff9e00; box-shadow: 0 0 15px #ff9e00; }
@@ -197,3 +207,4 @@ h1, h2, h3, .player-name, .goal-text, .badge, .status-badge, .month-separator {
     .deadline-text { font-size: 26px; color: #ff3333; }
     .date-row { flex-direction: column; gap: 5px; font-size: 22px; }
 }
+
