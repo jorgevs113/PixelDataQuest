@@ -45,6 +45,11 @@ function checkIfActive(start, end) {
 }
 
 function renderApp(phases) {
+    const loadingMessage = phasesContainer.querySelector('p');
+    if (loadingMessage && loadingMessage.parentElement === phasesContainer) {
+        loadingMessage.remove();
+    }
+
     // Limpiamos SOLO badges
     badgesContainer.innerHTML = '';
     
@@ -204,3 +209,4 @@ window.toggleTask = function(phaseId, taskId, currentStatus) {
     updates[`phases/${phaseId}/tasks/${taskId}/done`] = !currentStatus;
     update(ref(db), updates);
 };
+
