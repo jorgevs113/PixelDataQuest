@@ -35,7 +35,7 @@ h1, h2, h3, .player-name, .goal-text, .badge, .status-badge, .month-separator {
 
 /* LOGO */
 .header-logo-area { text-align: center; margin-bottom: 20px; }
-.game-logo { max-width: 200px; width: 90%; filter: drop-shadow(0 0 15px rgba(189, 0, 255, 0.6)); }
+.game-logo { max-width: 300px; width: 90%; filter: drop-shadow(0 0 15px rgba(189, 0, 255, 0.6)); }
 
 /* CONTENEDOR */
 .main-container { max-width: 800px; margin: 0 auto; position: relative; z-index: 10; }
@@ -207,6 +207,7 @@ h1, h2, h3, .player-name, .goal-text, .badge, .status-badge, .month-separator {
     .deadline-text { font-size: 26px; color: #ff3333; }
     .date-row { flex-direction: column; gap: 5px; font-size: 22px; }
 }
+
 
 
 
