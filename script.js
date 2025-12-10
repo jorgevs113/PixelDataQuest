@@ -45,13 +45,13 @@ function checkIfActive(start, end) {
 }
 
 function renderApp(phases) {
-    // Limpiamos SOLO los badges porque son fáciles de rehacer
+    // Limpiamos SOLO badges
     badgesContainer.innerHTML = '';
     
     let totalTasks = 0;
     let completedTasksGlobal = 0;
 
-    // 1. Cálculos Previos
+    // 1. Cálculos
     phases.forEach(phase => {
         if (!phase.tasks) phase.tasks = [];
         const completedCount = phase.tasks.filter(t => t.done).length;
@@ -60,27 +60,25 @@ function renderApp(phases) {
         completedTasksGlobal += completedCount;
     });
 
-    // 2. Ordenar: Activas arriba, completadas abajo
+    // 2. Ordenar
     const activePhases = phases.filter(p => !p.isCompleted).sort((a, b) => a.id - b.id);
     const completedPhases = phases.filter(p => p.isCompleted).sort((a, b) => a.id - b.id);
     const sortedPhases = [...activePhases, ...completedPhases];
 
-    // 3. RENDERIZADO INTELIGENTE (DOM DIFFING)
+    // 3. RENDERIZADO
     sortedPhases.forEach((phase) => {
         const phasePercent = phase.tasks.length === 0 ? 0 : Math.round((phase.tasks.filter(t => t.done).length / phase.tasks.length) * 100);
         const cardId = `phase-${phase.id}`;
         
-        // ¿Ya existe la tarjeta?
         let card = document.getElementById(cardId);
 
+        // --- CREACIÓN INICIAL (Si no existe) ---
         if (!card) {
-            // SI NO EXISTE: LA CREAMOS DE CERO
             card = document.createElement('div');
             card.id = cardId;
             card.className = 'phase-card';
             card.style.borderColor = phase.color;
             
-            // Construimos el HTML interno una sola vez
             const isActive = checkIfActive(phase.startDate, phase.deadline);
             let activeBadgeHTML = isActive && !phase.isCompleted ? `<span class="status-badge active-phase-badge">● EN CURSO</span>` : "";
 
@@ -106,7 +104,6 @@ function renderApp(phases) {
                 <div class="tasks-list"></div>
             `;
             
-            // Renderizamos tareas iniciales
             const taskListContainer = card.querySelector('.tasks-list');
             let currentMonth = "";
             phase.tasks.forEach((task) => {
@@ -121,7 +118,7 @@ function renderApp(phases) {
                 }
                 const taskItem = document.createElement('div');
                 taskItem.className = 'task-item';
-                taskItem.id = `task-${phase.id}-${task.id}`; // ID ÚNICO PARA LA TAREA
+                taskItem.id = `task-${phase.id}-${task.id}`;
                 taskItem.onclick = () => toggleTask(phase.id, task.id, task.done);
                 taskItem.innerHTML = `
                     <div class="pixel-checkbox"></div>
@@ -137,28 +134,28 @@ function renderApp(phases) {
             });
         }
 
-        // --- ACTUALIZACIÓN EN TIEMPO REAL (ESTO OCURRE SIEMPRE) ---
+        // --- ACTUALIZACIÓN (Siempre ocurre) ---
         
-        // 1. Mover la tarjeta a su nueva posición (si cambió el orden)
-        // Al hacer appendChild de un elemento que ya existe, el navegador lo mueve sin borrarlo.
-        phasesContainer.appendChild(card); 
+        phasesContainer.appendChild(card); // Reordenar sin borrar
 
-        // 2. Actualizar estilos de Completado
+        // Actualizar estilos completado
         if (phase.isCompleted) card.classList.add('completed');
         else card.classList.remove('completed');
 
-        // 3. ANIMAR LA BARRA (Aquí está el truco suave)
+        // --- CORRECCIÓN DE ANIMACIÓN ---
         const bar = card.querySelector('.progress-fill');
-        // Usamos un pequeño delay para que el navegador procese la animación
-        requestAnimationFrame(() => {
-            bar.style.width = `${phasePercent}%`;
-        });
-
-        // 4. Actualizar texto de porcentaje
         const percentText = card.querySelector('.percent-text');
-        if(percentText) percentText.innerText = `${phasePercent}%`;
+        
+        // Solo actualizamos si el valor cambió para no reiniciar animaciones innecesariamente
+        // Pero usamos setTimeout para asegurar que el navegador tenga tiempo de renderizar
+        setTimeout(() => {
+            if (bar.style.width !== `${phasePercent}%`) {
+                bar.style.width = `${phasePercent}%`;
+            }
+            if(percentText) percentText.innerText = `${phasePercent}%`;
+        }, 50);
 
-        // 5. Actualizar estado de cada tarea (Checkboxes)
+        // Actualizar checkboxes
         phase.tasks.forEach(task => {
             const taskEl = document.getElementById(`task-${phase.id}-${task.id}`);
             if (taskEl) {
@@ -170,25 +167,21 @@ function renderApp(phases) {
                     taskEl.classList.remove('done-task');
                     checkbox.classList.remove('checked');
                 }
-                // Actualizamos el onclick para que tenga el valor 'done' correcto actual
                 taskEl.onclick = () => toggleTask(phase.id, task.id, task.done);
             }
         });
     });
 
-    // 4. BADGES (Estos sí los reconstruimos porque son sencillos)
+    // 4. BADGES
     const numericPhases = [...phases].sort((a, b) => a.id - b.id);
     numericPhases.forEach(phase => {
         const anchor = document.createElement('a');
         anchor.href = `#phase-${phase.id}`;
         anchor.classList.add('badge-link');
-
         const badge = document.createElement('div');
         badge.classList.add('badge');
         if (phase.isCompleted) badge.classList.add('unlocked');
-        
         badge.innerHTML = `<img src="${phase.badge}" alt="Badge" class="badge-img">`;
-        
         if (phase.isCompleted) {
             badge.style.borderColor = phase.color;
             badge.style.boxShadow = `0 0 15px ${phase.color}`;
@@ -197,10 +190,13 @@ function renderApp(phases) {
         badgesContainer.appendChild(anchor);
     });
 
-    // 5. BARRA GLOBAL
+    // 5. BARRA GLOBAL (Esta ya funcionaba bien)
     const globalPercent = totalTasks === 0 ? 0 : Math.round((completedTasksGlobal / totalTasks) * 100);
-    globalProgressBar.style.width = `${globalPercent}%`;
-    globalPercentText.innerText = `${globalPercent}%`;
+    // Usamos el mismo truco del timeout para asegurar suavidad
+    setTimeout(() => {
+        globalProgressBar.style.width = `${globalPercent}%`;
+        globalPercentText.innerText = `${globalPercent}%`;
+    }, 50);
 }
 
 window.toggleTask = function(phaseId, taskId, currentStatus) {
