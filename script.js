@@ -13,7 +13,6 @@ import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/fireb
   messagingSenderId: "1017478767394",
   appId: "1:1017478767394:web:b9ecb4c50484e596757b7b"
 };
-};
 // --------------------------------------------------------
 
 const app = initializeApp(firebaseConfig);
@@ -183,4 +182,5 @@ window.toggleTask = function(phaseId, taskId, currentStatus) {
     updates[`phases/${phaseId}/tasks/${taskId}/done`] = !currentStatus;
     update(ref(db), updates);
 };
+
 
