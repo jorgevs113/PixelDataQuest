@@ -1,4 +1,4 @@
-/* --- RESET BÁSICO --- */
+/* --- RESET --- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -13,7 +13,7 @@ body {
     position: relative;
 }
 
-/* REJILLA PLANA */
+/* FONDOS */
 .retro-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
 .synthwave-grid {
     position: absolute; width: 100%; height: 100%; left: 0; top: 0;
@@ -26,7 +26,7 @@ body {
     pointer-events: none; z-index: 999;
 }
 
-/* TEXTOS */
+/* TIPOGRAFIA */
 h1, h2, h3, .player-name, .goal-text, .badge, .status-badge, .month-separator {
     font-family: 'Press Start 2P', cursive;
     text-transform: uppercase;
@@ -53,7 +53,7 @@ h1, h2, h3, .player-name, .goal-text, .badge, .status-badge, .month-separator {
 .goal-text { color: #ff9e00; text-shadow: 0 0 5px #ff9e00; font-size: 14px; }
 .deadline-text { color: #ff0054; text-shadow: 0 0 10px #ff0054; font-size: 18px; }
 
-/* BARRAS DE PROGRESO ANIMADAS */
+/* BARRAS DE PROGRESO */
 .progress-bar-container {
     flex-grow: 1; height: 30px; background: #10002b; border: 2px solid #5a189a;
     margin: 0 15px; position: relative; overflow: hidden;
@@ -84,20 +84,20 @@ h1, h2, h3, .player-name, .goal-text, .badge, .status-badge, .month-separator {
 .phase-header { border-bottom: 2px dashed #5a189a; margin-bottom: 15px; padding-bottom: 10px; }
 .phase-title { font-size: 20px; margin-bottom: 10px; color: #fff; line-height: 1.4; }
 
-/* INFO BOX */
+/* META DATA BOX */
 .level-meta-box {
     background: rgba(255, 255, 255, 0.05);
-    padding: 10px;
+    padding: 15px;
     border-radius: 5px;
     margin-bottom: 15px;
-    font-size: 16px;
+    font-size: 18px;
     color: #ddd;
-    border-left: 3px solid #5a189a;
+    border-left: 4px solid #5a189a;
 }
-.level-meta-box p { margin-bottom: 5px; }
+.level-meta-box p { margin-bottom: 8px; }
 .level-meta-box strong { color: #e0aaff; }
 
-/* Fechas */
+/* FECHAS */
 .date-row { display: flex; justify-content: space-between; align-items: center; width: 100%; font-size: 14px; margin-bottom: 5px; color: #aaa; }
 .status-badge {
     font-size: 12px; padding: 5px 10px; border-radius: 4px; display: inline-block; margin-left: 10px;
@@ -108,16 +108,17 @@ h1, h2, h3, .player-name, .goal-text, .badge, .status-badge, .month-separator {
 
 /* SEPARADOR MESES */
 .month-separator {
-    font-size: 16px;
-    margin: 20px 0 10px 0;
+    font-size: 18px;
+    margin: 30px 0 15px 0;
     padding-bottom: 5px;
-    border-bottom: 1px solid;
+    border-bottom: 2px solid;
     opacity: 0.8;
+    letter-spacing: 2px;
 }
 
 /* TAREAS */
 .task-item {
-    display: flex; align-items: flex-start; padding: 12px; margin-bottom: 8px;
+    display: flex; align-items: flex-start; padding: 15px; margin-bottom: 10px;
     background: rgba(255,255,255,0.05); cursor: pointer; border: 1px solid transparent; transition: 0.2s;
 }
 .task-item:hover { background: rgba(157, 78, 221, 0.3); border-color: #e0aaff; }
@@ -130,15 +131,14 @@ h1, h2, h3, .player-name, .goal-text, .badge, .status-badge, .month-separator {
 .pixel-checkbox.checked::after { content: '✔'; color: #000; font-size: 14px; }
 
 .task-content { flex-grow: 1; }
-.task-content h4 { font-size: 20px; margin-bottom: 8px; color: #e0aaff; transition: 0.3s; }
+.task-content h4 { font-size: 22px; margin-bottom: 10px; color: #fff; transition: 0.3s; }
 
-/* NUEVO: ESTILO PARA INSTRUCCION Y OBJETIVO */
-.task-details p { font-size: 16px; color: #e0aaff; font-family: sans-serif; opacity: 0.9; margin-bottom: 5px; line-height: 1.4; }
+/* INSTRUCCION Y OBJETIVO */
+.task-details p { font-size: 18px; color: #e0aaff; font-family: sans-serif; opacity: 0.9; margin-bottom: 8px; line-height: 1.4; }
 .task-details strong { color: #fff; }
-.task-instruction { color: #d0d0d0; }
-.task-objective { color: #aaa; font-style: italic; font-size: 15px !important;}
+.task-objective { color: #aaa; font-style: italic; font-size: 16px !important;}
 
-/* ESTADO COMPLETADO */
+/* COMPLETADO */
 .task-item.done-task .task-content h4 { text-decoration: line-through; color: #555; }
 .task-item.done-task .task-details p { text-decoration: line-through; opacity: 0.3; color: #555; }
 
@@ -154,23 +154,22 @@ h1, h2, h3, .player-name, .goal-text, .badge, .status-badge, .month-separator {
 @media (max-width: 768px) {
     body { font-size: 26px !important; }
     .game-logo { width: 100%; }
-    .phase-title { font-size: 28px !important; text-align: center; margin-bottom: 20px; }
+    .phase-title { font-size: 30px !important; text-align: center; margin-bottom: 20px; }
     
-    .level-meta-box { font-size: 20px; padding: 15px; }
-    .month-separator { font-size: 24px; margin-top: 30px; }
+    .level-meta-box { font-size: 22px; padding: 20px; }
+    .month-separator { font-size: 26px; margin-top: 40px; }
 
-    .task-item { padding: 20px 15px; margin-bottom: 15px; }
-    .task-content h4 { font-size: 30px !important; margin-bottom: 10px; line-height: 1.2; }
+    .task-item { padding: 25px 15px; margin-bottom: 20px; }
+    .task-content h4 { font-size: 32px !important; margin-bottom: 15px; line-height: 1.2; }
     
-    /* Letras grandes para instrucción móvil */
-    .task-details p { font-size: 22px !important; line-height: 1.4; margin-bottom: 10px; }
+    .task-details p { font-size: 24px !important; line-height: 1.5; margin-bottom: 15px; }
     
-    .pixel-checkbox { width: 45px; height: 45px; margin-right: 20px; border-width: 3px; }
-    .pixel-checkbox.checked::after { font-size: 30px; }
+    .pixel-checkbox { width: 50px; height: 50px; margin-right: 25px; border-width: 4px; }
+    .pixel-checkbox.checked::after { font-size: 35px; }
     
     .hud-row { flex-direction: column; gap: 15px; text-align: center; }
     .progress-bar-container { width: 100%; height: 50px; }
     .player-name, .goal-text { font-size: 22px; width: 100%; }
-    .deadline-text { font-size: 24px; color: #ff3333; }
-    .date-row { flex-direction: column; gap: 5px; font-size: 20px; }
+    .deadline-text { font-size: 26px; color: #ff3333; }
+    .date-row { flex-direction: column; gap: 5px; font-size: 22px; }
 }
