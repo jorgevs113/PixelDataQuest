@@ -69,7 +69,7 @@ h1, h2, h3, .player-name, .goal-text, .badge, .status-badge, .month-separator {
     height: 100%; 
     width: 0%; /* Empieza en 0 */
     /* ESTA ES LA MAGIA: Transition controla la velocidad del deslizamiento */
-    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); 
+    transition: width 2s cubic-bezier(0.4, 0, 0.2, 1); 
     
     background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
     background-size: 40px 40px;
@@ -207,4 +207,5 @@ h1, h2, h3, .player-name, .goal-text, .badge, .status-badge, .month-separator {
     .deadline-text { font-size: 26px; color: #ff3333; }
     .date-row { flex-direction: column; gap: 5px; font-size: 22px; }
 }
+
 
